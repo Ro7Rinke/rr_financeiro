@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { View, StyleSheet, Text } from 'react-native'
+import { View, StyleSheet, Text, TouchableOpacity } from 'react-native'
 import { formatMoney } from '../../common'
 
 const Installment = (props) => {
@@ -9,19 +9,21 @@ const Installment = (props) => {
         ? <Text style={styles.textSmall}>{props.currentInstallment}/{props.totalInstallment}</Text>
         : null
     return (
-        <View style={styles.container}>
-            <View style={styles.containerNameInstalment}>
-                <Text style={styles.textBig}>{props.name.substring(0, 20)}</Text>
-                {renderInstallment}
-            </View>
-            <View style={styles.containerValueDate}>
-                <Text style={styles.textBig}>R$ {formatMoney(props.valueInstallment, 2, ',', '.')}</Text>
-                <View style={styles.containerDate}>
-                    <Text style={styles.textSmall}>{day}</Text>
-                    <Text style={styles.textSmall}>{month < 10 ? `0${month}` : month}</Text>
+        <TouchableOpacity >
+            <View style={styles.container}>
+                <View style={styles.containerNameInstalment}>
+                    <Text style={styles.textBig}>{props.name.substring(0, 20)}</Text>
+                    {renderInstallment}
+                </View>
+                <View style={styles.containerValueDate}>
+                    <Text style={styles.textBig}>R$ {formatMoney(props.valueInstallment, 2, ',', '.')}</Text>
+                    <View style={styles.containerDate}>
+                        <Text style={styles.textSmall}>{day}</Text>
+                        <Text style={styles.textSmall}>{month < 10 ? `0${month}` : month}</Text>
+                    </View>
                 </View>
             </View>
-        </View>
+        </TouchableOpacity>
     )
 }
 
