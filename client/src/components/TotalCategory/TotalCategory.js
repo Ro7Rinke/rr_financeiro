@@ -1,13 +1,13 @@
 import React from 'react'
 import { View, StyleSheet, Text } from 'react-native'
+import {formatMoney} from '../../common'
 
-const TotalCategory = () => {
-    const categoryName = 'Mercado'
-    const value = 324.23
+const TotalCategory = (props) => {
+
     return(
         <View style={styles.container}>
-            <Text style={styles.categoryName}>{categoryName}: </Text>
-            <Text style={styles.value}>R${value}</Text>
+            <Text style={styles.categoryName}>{props.categoryName}: </Text>
+            <Text style={styles.value}>R$ {formatMoney(props.value, 2, ',', '.')}</Text>
         </View>
     )
 }
@@ -15,14 +15,16 @@ const TotalCategory = () => {
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
-        justifyContent: 'flex-start',
+        justifyContent: 'space-between',
         alignItems: 'center',
-        backgroundColor: '#fcfc99',
-        marginLeft: 15,
-        marginRight: 15,
+        backgroundColor: '#9999fc22',
+        marginLeft: 35,
+        marginRight: 35,
+        paddingLeft: 15,
+        paddingRight: 15,
         marginBottom: 10,
         borderWidth: 1,
-        borderColor: '#acacac'
+        borderColor: '#acacac77'
         // height: 200
     },
     categoryName: {
@@ -31,7 +33,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     value: {
-        color: '#f00',
+        color: '#cb3333',
         fontSize: 18,
     }
 })
