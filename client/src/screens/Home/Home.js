@@ -3,9 +3,12 @@ import { View, StyleSheet, Text, FlatList, TouchableOpacity, ScrollView } from '
 import TotalProgressBar from '../../components/TotalProgressBar/TotalProgressBar'
 import TotalCategory from '../../components/TotalCategory/TotalCategory'
 import Installment from '../../components/Installment/Installment'
-import Icon from 'react-native-vector-icons/FontAwesome'
+// import Icon from 'react-native-vector-icons/FontAwesome'
+import { colors } from '../../common'
 
 const Home = () => {
+    const [referenceDate, setReferenceDate] = useState(new Date())
+
     const [totalCategories, setTotalCategories] = useState([
         {id:1, categoryName: 'Mercado', value: 1327.12},
         {id:2, categoryName: 'Farmácia', value: 2171.02},
@@ -83,7 +86,7 @@ const Home = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#0000ff11'
+        backgroundColor: colors.appBackground,
     },
     addButtom: {
         borderWidth: 1,
