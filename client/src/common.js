@@ -19,4 +19,5 @@ export const formatMoney = (amount, decimalCount = 2, decimal = ".", thousands =
 
 export const colors = {
     appBackground: '#0000ff11',
+    primaryCollor: '#29002944',
 }
