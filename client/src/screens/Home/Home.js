@@ -5,8 +5,11 @@ import TotalCategory from '../../components/TotalCategory/TotalCategory'
 import Installment from '../../components/Installment/Installment'
 // import Icon from 'react-native-vector-icons/FontAwesome'
 import { colors } from '../../common'
+import { useNavigation } from '@react-navigation/native'
 
 const Home = () => {
+    const navigation = useNavigation()
+
     const [referenceDate, setReferenceDate] = useState(new Date())
 
     const [totalCategories, setTotalCategories] = useState([
@@ -74,7 +77,7 @@ const Home = () => {
                             key={item.id}/> )} />
 
             <TouchableOpacity
-                onPress={() => setTotalValue(totalValue + 100)}
+                onPress={() => navigation.navigate('AddInstallment')}
                 style={styles.addButtom}>
                 <Text style={styles.addButtomText}>➕</Text>
                 {/* <Icon name='plus' size={30} color='#01a699' /> */}

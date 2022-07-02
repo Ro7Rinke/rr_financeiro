@@ -4,8 +4,10 @@ import {colors} from '../../common'
 import { MaskedTextInput } from "react-native-mask-text"
 import DateTimePicker from '@react-native-community/datetimepicker'
 import {Picker} from '@react-native-picker/picker'
+import { useNavigation, StackActions } from '@react-navigation/native'
 
 const AddInstallment = (props) => {
+    const navigation = useNavigation()
 
     const [nameText, setNameText] = useState('')
 
@@ -19,8 +21,8 @@ const AddInstallment = (props) => {
     const [category, setCategory] = useState(5)
     const [categories, setCategories] = useState([
         {name: 'Mercado', id: 1},
-        {name: 'Farmácia', id: 2},
-        {name: 'Alimentação', id: 3},
+        {name: 'Alimentação', id: 2},
+        {name: 'Farmácia', id: 3},
         {name: 'Combustível', id: 4},
         {name: 'Outros', id: 5},
     ])
@@ -32,7 +34,7 @@ const AddInstallment = (props) => {
 
     const onAddInstallment = () => {
         if(checkFields()){
-            setNameText('')
+            navigation.dispatch(StackActions.popToTop('Home'))
         }else{
             alert('Por favor preencha todos os campos!')
         }
@@ -100,11 +102,12 @@ const AddInstallment = (props) => {
             )}
             <View style={styles.inputContainer}>
                 <Text style={styles.label}>Categoria:</Text>
+                <View style={[styles.categoryColor, {backgroundColor: colors.categories[`${category}`]}]} />
                 <Picker style={[styles.textInput, styles.pickerCategory]}
                     onValueChange={(newCategory => setCategory(newCategory))}
                     selectedValue={category} >
                     {categories.map(item => 
-                        (<Picker.Item key={item.id} label={item.name} value={item.id}/>)
+                        (<Picker.Item style={styles.pickerItem} key={item.id} label={item.name} value={item.id}/>)
                     )}
                 </Picker>
             </View>
@@ -160,8 +163,18 @@ const styles = StyleSheet.create({
         paddingTop: 5,
         borderWidth: 2,
     },
+    categoryColor: {
+        width: 15,
+        height: '70%',
+    },
     pickerCategory: {
         width: 170,
+        marginLeft: 0,
+    },
+    pickerItem: {
+        // borderColor: '#000',
+        // borderWidth: 5,
+        // fontSize: 15,
     },
     buttonContainer: {
         justifyContent: 'center',
@@ -176,7 +189,7 @@ const styles = StyleSheet.create({
         height: 50,
         textAlign: 'center',
         textAlignVertical: 'center',
-        backgroundColor: colors.primaryCollor,
+        backgroundColor: '#8c25a1aa',
         fontSize: 18,
         fontWeight: '500',
     },
