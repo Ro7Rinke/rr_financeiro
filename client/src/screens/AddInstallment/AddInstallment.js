@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
     },
     button: {
         borderRadius: 5,
-        color: '#000',
+        color: '#fff',
         width: 230,
         height: 50,
         textAlign: 'center',
