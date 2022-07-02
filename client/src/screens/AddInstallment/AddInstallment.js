@@ -139,6 +139,7 @@ const styles = StyleSheet.create({
         textAlign: 'right',
     },
     textInput: {
+        borderRadius: 5,
         width: 150,
         height: 40,
         margin: 12,
@@ -184,6 +185,7 @@ const styles = StyleSheet.create({
         // marginBottom: 30,
     },
     button: {
+        borderRadius: 5,
         color: '#000',
         width: 230,
         height: 50,

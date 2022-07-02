@@ -18,6 +18,7 @@ const TotalCategory = (props) => {
 
 const styles = StyleSheet.create({
     container: {
+        borderRadius: 5,
         flexDirection: 'row',
         // justifyContent: 'space-between',
         alignItems: 'center',
@@ -38,6 +39,8 @@ const styles = StyleSheet.create({
         paddingLeft: 5,
     },
     categoryColor: {
+        borderTopLeftRadius: 5,
+        borderBottomLeftRadius: 5,
         width: 10,
         height: '100%',
     },

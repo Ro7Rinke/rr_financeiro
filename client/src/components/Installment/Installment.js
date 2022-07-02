@@ -66,6 +66,7 @@ const Installment = (props) => {
 
 const styles = StyleSheet.create({
     container: {
+        borderRadius: 5,
         flexDirection: 'row',
         // justifyContent: 'space-between',
         alignItems: 'center',
@@ -80,6 +81,8 @@ const styles = StyleSheet.create({
         borderColor: colors.borderColor,
     },
     categoryColor: {
+        borderTopLeftRadius: 5,
+        borderBottomLeftRadius: 5,
         width: 10,
         height: '100%',
         backgroundColor: '#000',
