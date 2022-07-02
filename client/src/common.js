@@ -20,4 +20,12 @@ export const formatMoney = (amount, decimalCount = 2, decimal = ".", thousands =
 export const colors = {
     appBackground: '#0000ff11',
     primaryCollor: '#29002944',
+    borderColor: '#acacac77',
+    categories: {
+        '1': '#ff0000',
+        '2': '#e900e9',
+        '3': '#ede213',
+        '4': '#00bf00',
+        '5': '#0000ff',
+    }
 }

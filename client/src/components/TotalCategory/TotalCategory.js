@@ -1,13 +1,17 @@
 import React from 'react'
 import { View, StyleSheet, Text } from 'react-native'
-import {formatMoney} from '../../common'
+import {colors, formatMoney} from '../../common'
 
 const TotalCategory = (props) => {
 
     return(
-        <View style={styles.container}>
-            <Text style={styles.categoryName}>{props.categoryName}: </Text>
-            <Text style={styles.value}>R$ {formatMoney(props.value, 2, ',', '.')}</Text>
+        <View style={[styles.container]}>
+            <View style={[styles.categoryColor, {backgroundColor: colors.categories[`${props.categoryId}`]}]} />
+            <View style={styles.containerText}>
+                <Text style={styles.categoryName}>{props.categoryName}: </Text>
+                <Text style={styles.value}>R$ {formatMoney(props.value, 2, ',', '.')}</Text>
+            </View>
+            
         </View>
     )
 }
@@ -15,17 +19,27 @@ const TotalCategory = (props) => {
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        // justifyContent: 'space-between',
         alignItems: 'center',
         backgroundColor: '#9999fc22',
         marginLeft: 35,
         marginRight: 35,
-        paddingLeft: 15,
+        // paddingLeft: 5,
         paddingRight: 15,
         marginBottom: 10,
         borderWidth: 1,
-        borderColor: '#acacac77'
-        // height: 200
+        borderColor: colors.borderColor,
+    },
+    containerText: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingLeft: 5,
+    },
+    categoryColor: {
+        width: 10,
+        height: '100%',
     },
     categoryName: {
         color: '#000',
