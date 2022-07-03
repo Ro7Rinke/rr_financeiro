@@ -1,11 +1,17 @@
-import React, {useState} from 'react'
-import { View, StyleSheet, Text, FlatList, TouchableOpacity, ScrollView } from 'react-native'
+import React, {useRef, useState} from 'react'
+import { Dimensions, View, StyleSheet, Text, FlatList, TouchableOpacity, ScrollView } from 'react-native'
 import TotalProgressBar from '../../components/TotalProgressBar/TotalProgressBar'
 import TotalCategory from '../../components/TotalCategory/TotalCategory'
 import Installment from '../../components/Installment/Installment'
 // import Icon from 'react-native-vector-icons/FontAwesome'
 import { colors } from '../../common'
 import { useNavigation } from '@react-navigation/native'
+import MonthHeader from '../../components/MonthHeader/MonthHeader'
+import moment from 'moment'
+import 'moment/locale/pt'
+
+const windowWidth = Dimensions.get('window').width
+const windowHeight = Dimensions.get('window').height
 
 const Home = () => {
     const navigation = useNavigation()
@@ -43,11 +49,80 @@ const Home = () => {
         {categoryId: 1,id: 20, name: 'Mercado', entryDate: new Date(), valueInstallment: 53.12, currentInstallment: 1, totalInstallment: 1},
     ])
 
+    const [monthList, setMonthList] = useState([
+        {id: 1, date: moment('01/01/2021', 'DD/MM/YYYY', true), selected: false},
+        {id: 2, date: moment('01/02/2021', 'DD/MM/YYYY', true), selected: false},
+        {id: 3, date: moment('01/03/2021', 'DD/MM/YYYY', true), selected: false},
+        {id: 4, date: moment('01/04/2021', 'DD/MM/YYYY', true), selected: false},
+        {id: 5, date: moment('01/05/2021', 'DD/MM/YYYY', true), selected: false},
+        {id: 6, date: moment('01/06/2021', 'DD/MM/YYYY', true), selected: false},
+        {id: 7, date: moment('01/07/2021', 'DD/MM/YYYY', true), selected: false},
+        {id: 8, date: moment('01/08/2021', 'DD/MM/YYYY', true), selected: false},
+        {id: 9, date: moment('01/09/2021', 'DD/MM/YYYY', true), selected: false},
+        {id: 10, date: moment('01/10/2021', 'DD/MM/YYYY', true), selected: false},
+        {id: 11, date: moment('01/11/2021', 'DD/MM/YYYY', true), selected: false},
+        {id: 12, date: moment('01/12/2021', 'DD/MM/YYYY', true), selected: false},
+        {id: 21, date: moment('01/01/2022', 'DD/MM/YYYY', true), selected: false},
+        {id: 22, date: moment('01/02/2022', 'DD/MM/YYYY', true), selected: false},
+        {id: 23, date: moment('01/03/2022', 'DD/MM/YYYY', true), selected: false},
+        {id: 24, date: moment('01/04/2022', 'DD/MM/YYYY', true), selected: true},
+        {id: 25, date: moment('01/05/2022', 'DD/MM/YYYY', true), selected: false},
+        {id: 26, date: moment('01/06/2022', 'DD/MM/YYYY', true), selected: false},
+        {id: 27, date: moment('01/07/2022', 'DD/MM/YYYY', true), selected: false},
+        {id: 28, date: moment('01/08/2022', 'DD/MM/YYYY', true), selected: false},
+        {id: 29, date: moment('01/09/2022', 'DD/MM/YYYY', true), selected: false},
+        {id: 210, date: moment('01/10/2022', 'DD/MM/YYYY', true), selected: false},
+        {id: 211, date: moment('01/11/2022', 'DD/MM/YYYY', true), selected: false},
+        {id: 212, date: moment('01/12/2022', 'DD/MM/YYYY', true), selected: false},
+    ])
+
     const [totalValue, setTotalValue] = useState(2000)
     const [targetValue, setTargetValue] = useState(10000)
 
+    const ref = useRef(null)
+
+    const selectMonth = (id) => {
+        ref.current?.scrollToIndex({
+            index: monthList.findIndex(element => element.id == id),
+            animemated: true,
+            viewPosition: 0.5,
+            viewOffset: id == 1 ? windowWidth/3 : -windowWidth/3
+        })
+
+        let newMonthList = []
+        monthList.map(element => {
+            newMonthList.push({...element, selected: element.id == id})
+        })
+
+        setMonthList(newMonthList)
+
+        setTotalValue(totalValue + 100)
+    }
+
     return (
-        <View style={styles.container}>
+        <View  style={styles.container}>
+            <FlatList style={{paddingTop: 5}}
+                ref={ref}
+                ListHeaderComponent={(
+                    <View style={{width: windowWidth/3}}></View>
+                )}
+                ListFooterComponent={(
+                    <View style={{width: windowWidth/3}}></View>
+                )}
+                renderItem={({item}) => (
+                    <TouchableOpacity onPress={() => {
+                        selectMonth(item.id)
+                    }} >
+                        <MonthHeader date={item.date} selected={item.selected}/>
+                    </TouchableOpacity>
+                )}
+                initialScrollIndex={monthList.findIndex( element => element.selected)}
+                scrollEnabled={false}
+                getItemLayout={(data, index) => ({length: windowWidth/3, offset: (windowWidth/3) * index, index})}
+                data={monthList}
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+                keyExtractor={item => item.id} />
             <FlatList keyExtractor={item => item.id}
                     ListHeaderComponent={(
                         <View >
@@ -101,7 +176,7 @@ const styles = StyleSheet.create({
         bottom: 10,
         right: 10,
         height: 70,
-        backgroundColor: '#29002944',//'#01a69944',
+        backgroundColor: colors.secondaryColor,//'#29002944',//'#01a69944',
         borderRadius: 100,
     },
     addButtomText: {
