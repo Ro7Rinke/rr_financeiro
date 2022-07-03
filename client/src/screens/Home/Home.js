@@ -101,31 +101,32 @@ const Home = () => {
 
     return (
         <View  style={styles.container}>
-            <FlatList style={{paddingTop: 5}}
-                ref={ref}
-                ListHeaderComponent={(
-                    <View style={{width: windowWidth/3}}></View>
-                )}
-                ListFooterComponent={(
-                    <View style={{width: windowWidth/3}}></View>
-                )}
-                renderItem={({item}) => (
-                    <TouchableOpacity onPress={() => {
-                        selectMonth(item.id)
-                    }} >
-                        <MonthHeader date={item.date} selected={item.selected}/>
-                    </TouchableOpacity>
-                )}
-                initialScrollIndex={monthList.findIndex( element => element.selected)}
-                scrollEnabled={false}
-                getItemLayout={(data, index) => ({length: windowWidth/3, offset: (windowWidth/3) * index, index})}
-                data={monthList}
-                horizontal={true}
-                showsHorizontalScrollIndicator={false}
-                keyExtractor={item => item.id} />
+            
             <FlatList keyExtractor={item => item.id}
                     ListHeaderComponent={(
                         <View >
+                            <FlatList style={{paddingTop: 5}}
+                                ref={ref}
+                                ListHeaderComponent={(
+                                    <View style={{width: windowWidth/3}}></View>
+                                )}
+                                ListFooterComponent={(
+                                    <View style={{width: windowWidth/3}}></View>
+                                )}
+                                renderItem={({item}) => (
+                                    <TouchableOpacity onPress={() => {
+                                        selectMonth(item.id)
+                                    }} >
+                                        <MonthHeader date={item.date} selected={item.selected}/>
+                                    </TouchableOpacity>
+                                )}
+                                initialScrollIndex={monthList.findIndex( element => element.selected)}
+                                scrollEnabled={false}
+                                getItemLayout={(data, index) => ({length: windowWidth/3, offset: (windowWidth/3) * index, index})}
+                                data={monthList}
+                                horizontal={true}
+                                showsHorizontalScrollIndicator={false}
+                                keyExtractor={item => item.id} />
                             <TotalProgressBar
                                 totalValue={totalValue}
                                 targetValue={targetValue}/>
