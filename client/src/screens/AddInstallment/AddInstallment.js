@@ -111,10 +111,11 @@ const AddInstallment = (props) => {
                     )}
                 </Picker>
             </View>
-            <TouchableOpacity onPress={onAddInstallment}
-                style={styles.buttonContainer}>
-                <Text style={styles.button}>Adicionar Lançamento</Text>
-            </TouchableOpacity>
+            <View style={styles.buttonContainer} >
+                <TouchableOpacity onPress={onAddInstallment} >
+                    <Text style={styles.button}>Adicionar Lançamento</Text>
+                </TouchableOpacity>
+            </View>
         </View>
     )
 }
