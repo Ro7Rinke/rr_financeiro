@@ -2,30 +2,40 @@ import React, {useState} from 'react'
 import { View, StyleSheet, Text, TouchableOpacity, Modal } from 'react-native'
 import { colors, formatMoney } from '../../common'
 
+import store from '../../redux/store'
+import * as installmentsAction from '../../redux/actions/installmentsAction' 
+
 const Installment = (props) => {
-    const day = props.entryDate.getDate()
-    const month = props.entryDate.getMonth() + 1
-    const dayText = day < 10 ? `0${day}` : day
-    const monthText = month < 10 ? `0${month}` : month
-    const year = props.entryDate.getFullYear()
+    // const day = props.installment.entryDate.getDate()
+    // const month = props.installment.entryDate.getMonth() + 1
+    const dayText = props.installment.entryDate.format('DD')//day < 10 ? `0${day}` : day
+    const monthText = props.installment.entryDate.format('MM')//month < 10 ? `0${month}` : month
+    const year = props.installment.entryDate.format('YYYY')//props.installment.entryDate.getFullYear()
     
-    const renderInstallment = props.totalInstallment > 1 
-        ? <Text style={styles.textSmall}>{props.currentInstallment}/{props.totalInstallment}</Text>
+    const renderInstallment = props.installment.totalInstallment > 1 
+        ? <Text style={styles.textSmall}>{props.installment.currentInstallment}/{props.installment.totalInstallment}</Text>
         : null
 
     const [showDeleteModal, setShowDeleteModal] = useState(false)
+
+    const deleteInstallment = () => {
+
+        store.dispatch(installmentsAction.removeInstallment({id: props.installment.id}))
+
+        setShowDeleteModal(!showDeleteModal)
+    }
 
     return (
         <View>
             <TouchableOpacity onLongPress={() => setShowDeleteModal(true)} >
                 <View style={styles.container}>
-                    <View style={[styles.categoryColor, {backgroundColor: colors.categories[`${props.categoryId}`]}]} />
+                    <View style={[styles.categoryColor, {backgroundColor: colors.categories[`${props.installment.categoryId}`]}]} />
                     <View style={styles.containerNameInstalment}>
-                        <Text style={props.name.length <= 20 ? styles.textBig : [styles.textBig, {fontSize: 15}]}>{props.name.substring(0, 25)}</Text>
+                        <Text style={props.installment.name.length <= 20 ? styles.textBig : [styles.textBig, {fontSize: 15}]}>{props.installment.name.substring(0, 25)}</Text>
                         {renderInstallment}
                     </View>
                     <View style={styles.containerValueDate}>
-                        <Text style={styles.textBig}>R$ {formatMoney(props.valueInstallment, 2, ',', '.')}</Text>
+                        <Text style={styles.textBig}>R$ {formatMoney(props.installment.valueInstallment, 2, ',', '.')}</Text>
                         <View style={styles.containerDate}>
                             <Text style={styles.textSmall}>{dayText}</Text>
                             <Text style={styles.textSmall}>{monthText}</Text>
@@ -41,12 +51,12 @@ const Installment = (props) => {
                 }} >
                 <View style={styles.centeredView}>
                     <View style={styles.modalView}>
-                        <Text style={styles.modalText}>Deletar o lançamento {props.name}</Text>
-                        <Text style={styles.modalText}>R$ {formatMoney(props.valueInstallment, 2, ',', '.')} - {dayText}/{monthText}/{year}</Text>
+                        <Text style={styles.modalText}>Deletar o lançamento {props.installment.name}</Text>
+                        <Text style={styles.modalText}>R$ {formatMoney(props.installment.valueInstallment, 2, ',', '.')} - {dayText}/{monthText}/{year}</Text>
                         <View style={styles.modalButtonsContainer}>
                             <TouchableOpacity
                                 style={[styles.button, styles.buttonDelete]}
-                                onPress={() => setShowDeleteModal(!showDeleteModal)}
+                                onPress={deleteInstallment}
                             >
                                 <Text style={[styles.textStyle]}>Deletar</Text>
                             </TouchableOpacity>

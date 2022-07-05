@@ -1,19 +1,28 @@
 import React, {useRef, useState} from 'react'
 import { Dimensions, View, StyleSheet, Text, FlatList, TouchableOpacity, ScrollView } from 'react-native'
+
 import TotalProgressBar from '../../components/TotalProgressBar/TotalProgressBar'
 import TotalCategory from '../../components/TotalCategory/TotalCategory'
 import Installment from '../../components/Installment/Installment'
-// import Icon from 'react-native-vector-icons/FontAwesome'
-import { colors } from '../../common'
-import { useNavigation } from '@react-navigation/native'
 import MonthHeader from '../../components/MonthHeader/MonthHeader'
+
+// import Icon from 'react-native-vector-icons/FontAwesome'
+
+import { colors } from '../../common'
+
+import { useNavigation } from '@react-navigation/native'
+
+import {connect} from 'react-redux'
+import store from '../../redux/store'
+import * as targetValueAction from '../../redux/actions/targetValueAction' 
+
 import moment from 'moment'
 import 'moment/locale/pt'
 
 const windowWidth = Dimensions.get('window').width
 const windowHeight = Dimensions.get('window').height
 
-const Home = () => {
+const Home = (props) => {
     const navigation = useNavigation()
 
     const [referenceDate, setReferenceDate] = useState(new Date())
@@ -26,28 +35,28 @@ const Home = () => {
         {id:5, categoryName: 'Outros', value: 54.12},
     ])
 
-    const [installments, setInstallments] = useState([
-        {categoryId: 1,id: 1, name: 'Supermercado Big Bom', entryDate: new Date(), valueInstallment: 3894.26, currentInstallment: 1, totalInstallment: 2},
-        {categoryId: 4,id: 2, name: 'Fernando Auto Center', entryDate: new Date(), valueInstallment: 3894.26, currentInstallment: 1, totalInstallment: 2},
-        {categoryId: 4,id: 3, name: 'Conserto Toyota Suspensão', entryDate: new Date(), valueInstallment: 3894.26, currentInstallment: 1, totalInstallment: 2},
-        {categoryId: 2,id: 4, name: 'Farmácia', entryDate: new Date(), valueInstallment: 3894.26, currentInstallment: 1, totalInstallment: 2},
-        {categoryId: 3,id: 5, name: 'Mercado', entryDate: new Date(), valueInstallment: 3894.26, currentInstallment: 1, totalInstallment: 2},
-        {categoryId: 5,id: 6, name: 'Troca correia dentada civic', entryDate: new Date(), valueInstallment: 3894.26, currentInstallment: 1, totalInstallment: 2},
-        {categoryId: 1,id: 7, name: 'Farmácia', entryDate: new Date(), valueInstallment: 3894.26, currentInstallment: 1, totalInstallment: 2},
-        {categoryId: 2,id: 8, name: 'Farmácia', entryDate: new Date(), valueInstallment: 3894.26, currentInstallment: 1, totalInstallment: 2},
-        {categoryId: 5,id: 9, name: 'Farmácia', entryDate: new Date(), valueInstallment: 3894.26, currentInstallment: 1, totalInstallment: 2},
-        {categoryId: 5,id: 10, name: 'Farmácia', entryDate: new Date(), valueInstallment: 3894.26, currentInstallment: 1, totalInstallment: 2},
-        {categoryId: 3,id: 11, name: 'Mercado', entryDate: new Date(), valueInstallment: 53.12, currentInstallment: 1, totalInstallment: 1},
-        {categoryId: 1,id: 12, name: 'Mercado', entryDate: new Date(), valueInstallment: 53.12, currentInstallment: 1, totalInstallment: 1},
-        {categoryId: 1,id: 13, name: 'Mercado', entryDate: new Date(), valueInstallment: 53.12, currentInstallment: 1, totalInstallment: 1},
-        {categoryId: 1,id: 14, name: 'Mercado', entryDate: new Date(), valueInstallment: 53.12, currentInstallment: 1, totalInstallment: 1},
-        {categoryId: 1,id: 15, name: 'Mercado', entryDate: new Date(), valueInstallment: 53.12, currentInstallment: 1, totalInstallment: 1},
-        {categoryId: 1,id: 16, name: 'Mercado', entryDate: new Date(), valueInstallment: 53.12, currentInstallment: 1, totalInstallment: 1},
-        {categoryId: 1,id: 17, name: 'Mercado', entryDate: new Date(), valueInstallment: 53.12, currentInstallment: 1, totalInstallment: 1},
-        {categoryId: 1,id: 18, name: 'Mercado', entryDate: new Date(), valueInstallment: 53.12, currentInstallment: 1, totalInstallment: 1},
-        {categoryId: 1,id: 19, name: 'Mercado', entryDate: new Date(), valueInstallment: 53.12, currentInstallment: 1, totalInstallment: 1},
-        {categoryId: 1,id: 20, name: 'Mercado', entryDate: new Date(), valueInstallment: 53.12, currentInstallment: 1, totalInstallment: 1},
-    ])
+    // const [installments, setInstallments] = useState([
+    //     {categoryId: 1,id: 1, name: 'Supermercado Big Bom', entryDate: new Date(), valueInstallment: 3894.26, currentInstallment: 1, totalInstallment: 2},
+    //     {categoryId: 4,id: 2, name: 'Fernando Auto Center', entryDate: new Date(), valueInstallment: 3894.26, currentInstallment: 1, totalInstallment: 2},
+    //     {categoryId: 4,id: 3, name: 'Conserto Toyota Suspensão', entryDate: new Date(), valueInstallment: 3894.26, currentInstallment: 1, totalInstallment: 2},
+    //     {categoryId: 2,id: 4, name: 'Farmácia', entryDate: new Date(), valueInstallment: 3894.26, currentInstallment: 1, totalInstallment: 2},
+    //     {categoryId: 3,id: 5, name: 'Mercado', entryDate: new Date(), valueInstallment: 3894.26, currentInstallment: 1, totalInstallment: 2},
+    //     {categoryId: 5,id: 6, name: 'Troca correia dentada civic', entryDate: new Date(), valueInstallment: 3894.26, currentInstallment: 1, totalInstallment: 2},
+    //     {categoryId: 1,id: 7, name: 'Farmácia', entryDate: new Date(), valueInstallment: 3894.26, currentInstallment: 1, totalInstallment: 2},
+    //     {categoryId: 2,id: 8, name: 'Farmácia', entryDate: new Date(), valueInstallment: 3894.26, currentInstallment: 1, totalInstallment: 2},
+    //     {categoryId: 5,id: 9, name: 'Farmácia', entryDate: new Date(), valueInstallment: 3894.26, currentInstallment: 1, totalInstallment: 2},
+    //     {categoryId: 5,id: 10, name: 'Farmácia', entryDate: new Date(), valueInstallment: 3894.26, currentInstallment: 1, totalInstallment: 2},
+    //     {categoryId: 3,id: 11, name: 'Mercado', entryDate: new Date(), valueInstallment: 53.12, currentInstallment: 1, totalInstallment: 1},
+    //     {categoryId: 1,id: 12, name: 'Mercado', entryDate: new Date(), valueInstallment: 53.12, currentInstallment: 1, totalInstallment: 1},
+    //     {categoryId: 1,id: 13, name: 'Mercado', entryDate: new Date(), valueInstallment: 53.12, currentInstallment: 1, totalInstallment: 1},
+    //     {categoryId: 1,id: 14, name: 'Mercado', entryDate: new Date(), valueInstallment: 53.12, currentInstallment: 1, totalInstallment: 1},
+    //     {categoryId: 1,id: 15, name: 'Mercado', entryDate: new Date(), valueInstallment: 53.12, currentInstallment: 1, totalInstallment: 1},
+    //     {categoryId: 1,id: 16, name: 'Mercado', entryDate: new Date(), valueInstallment: 53.12, currentInstallment: 1, totalInstallment: 1},
+    //     {categoryId: 1,id: 17, name: 'Mercado', entryDate: new Date(), valueInstallment: 53.12, currentInstallment: 1, totalInstallment: 1},
+    //     {categoryId: 1,id: 18, name: 'Mercado', entryDate: new Date(), valueInstallment: 53.12, currentInstallment: 1, totalInstallment: 1},
+    //     {categoryId: 1,id: 19, name: 'Mercado', entryDate: new Date(), valueInstallment: 53.12, currentInstallment: 1, totalInstallment: 1},
+    //     {categoryId: 1,id: 20, name: 'Mercado', entryDate: new Date(), valueInstallment: 53.12, currentInstallment: 1, totalInstallment: 1},
+    // ])
 
     const [monthList, setMonthList] = useState([
         {id: 1, date: moment('01/01/2021', 'DD/MM/YYYY', true), selected: false},
@@ -77,7 +86,7 @@ const Home = () => {
     ])
 
     const [totalValue, setTotalValue] = useState(2000)
-    const [targetValue, setTargetValue] = useState(10000)
+    // const [targetValue, setTargetValue] = useState(200)
 
     const ref = useRef(null)
 
@@ -95,8 +104,6 @@ const Home = () => {
         })
 
         setMonthList(newMonthList)
-
-        setTotalValue(totalValue + 100)
     }
 
     return (
@@ -129,7 +136,7 @@ const Home = () => {
                                 keyExtractor={item => item.id} />
                             <TotalProgressBar
                                 totalValue={totalValue}
-                                targetValue={targetValue}/>
+                                targetValue={props.targetValue}/>
                             <View style={styles.totalCategory} >
                                 {
                                     totalCategories.map(totalCategory => 
@@ -141,15 +148,16 @@ const Home = () => {
                             </View>
                         </View>
                     )}
-                    data={installments}
+                    data={props.installments}
                     renderItem={({item}) => (
-                        <Installment 
-                            entryDate={item.entryDate}
-                            valueInstallment={item.valueInstallment}
-                            currentInstallment={item.currentInstallment}
-                            totalInstallment={item.totalInstallment} 
-                            name={item.name}
-                            categoryId={item.categoryId}
+                        <Installment
+                            installment={item} 
+                            // entryDate={item.entryDate}
+                            // valueInstallment={item.valueInstallment}
+                            // currentInstallment={item.currentInstallment}
+                            // totalInstallment={item.totalInstallment} 
+                            // name={item.name}
+                            // categoryId={item.categoryId}
                             key={item.id}/> )} />
 
             <TouchableOpacity
@@ -190,4 +198,11 @@ const styles = StyleSheet.create({
     },
 })
 
-export default Home
+const mapStateToProps = (state) => {
+    return {
+        targetValue: state.targetValue,
+        installments: state.installments
+    }
+}
+
+export default connect(mapStateToProps)(Home)
