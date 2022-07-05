@@ -21,11 +21,11 @@ create table if not exists Categoria (
 
 create table if not exists Tag (
 	id serial primary key not null,
-	idCategoria integer not null,
+	idConta integer not null,
 	nome varchar(40) not null,
 	descricao varchar(200) null,
 	ativo boolean not null,
-	constraint fk_idCategoria foreign key(idCategoria) references Categoria(id)
+	constraint fk_idConta foreign key(idConta) references Conta(id)
 );
 
 create table if not exists LancamentoPeriodico (
@@ -64,6 +64,21 @@ create table if not exists Lancamento (
 	constraint fk_idUsuario foreign key(idUsuario) references Usuario(id),
 	constraint fk_idCategoria foreign key(idCategoria) references Categoria(id),
 	constraint fk_idLancamentoPeriodico foreign key(idLancamentoPeriodico) references LancamentoPeriodico(id)
+);
+
+create table if not exists Parcela (
+	id serial primary key not null,
+	idConta integer not null,
+	idUsuario integer not null,
+	idLancamento integer not null,
+	dataParcela date not null,
+	parcelaAtual integer not null,
+	valorParcela numeric(10,2) not null,
+	dataInclusao date not null,
+	ativo boolean not null,
+	constraint fk_idLancamento foreign key(idLancamento) references Lancamento(id),
+	constraint fk_idConta foreign key(idConta) references Conta(id),
+	constraint fk_idUsuario foreign key(idUsuario) references Usuario(id)
 );
 
 
