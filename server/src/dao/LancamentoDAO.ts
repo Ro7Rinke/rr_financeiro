@@ -84,17 +84,17 @@ const readLancamentos = async (idsLancamento:Array<number>):Promise<Lancamento[]
 
 const readLancamentosByConta = async (idConta:number):Promise<Lancamento[]> => {
     let sql = `select id, idConta, idUsuario, nome, descricao, ativo, dataInclusao, valorTotal, parcelaTotal, idCategoria, dataLancamento, idLancamentoPeriodico from Lancamento where idConta = $1`
-let params = [idConta]
+    let params = [idConta]
 
-const result = await pool.query(sql, params)
+    const result = await pool.query(sql, params)
 
-let lancamentos:Array<Lancamento> = []
+    let lancamentos:Array<Lancamento> = []
 
-if(result.rows){
-    for(const row of result.rows){
-        let lancamento = new Lancamento()
+    if(result.rows){
+        for(const row of result.rows){
+            let lancamento = new Lancamento()
 
-        lancamento.id = row.id
+            lancamento.id = row.id
             lancamento.idConta = row.idConta
             lancamento.idUsuario = row.idUsuario
             lancamento.nome = row.nome
@@ -106,10 +106,10 @@ if(result.rows){
             lancamento.idCategoria = row.idCategoria
             lancamento.dataLancamento = row.dataLancamento
             lancamento.idLancamentoPeriodico = row.idLancamentoPeriodico
+        }
     }
-}
 
-return lancamentos
+    return lancamentos
 }
 
 const deleteLancamentos = async (idsLancamento:number[]) => {
