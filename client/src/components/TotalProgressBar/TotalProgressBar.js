@@ -9,7 +9,7 @@ const TotalProgressBar = (props) => {
     // const [targetValue, setTargetValue] = useState(10000)
 
     const calculateFillPercentage = () => {
-        return (props.totalValue * 100 / props.targetValue)
+        return (props.totalValue * 100 / (props.targetValue > 0 ? props.targetValue : 1))
     }
 
     const fillPercentage = calculateFillPercentage()
