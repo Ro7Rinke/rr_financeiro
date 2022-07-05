@@ -100,6 +100,33 @@ const readParcelasByConta = async (idConta:number):Promise<Parcela[]> => {
     return parcelas
 }
 
+const readParcelasByMonth = async (idConta:number, month:number):Promise<Parcela[]> => {
+    let sql = `select idConta, idUsuario, idLancamento, dataParcela, parcelaAtual, valorParcela, dataInclusao, ativo from Parcela where idConta = $1 and EXTRACT(MONTH from Date dataParcela) = $2`
+    let params = [idConta]
+
+    const result = await pool.query(sql, params)
+
+    let parcelas:Array<Parcela> = []
+
+    if(result.rows){
+        for(const row of result.rows){
+            let parcela = new Parcela()
+
+            parcela.id = row.id
+            parcela.idConta = row.idConta
+            parcela.idUsuario = row.idUsuario
+            parcela.ativo = row.ativo
+            parcela.dataInclusao = row.dataInclusao
+            parcela.valorParcela = row.valorParcela
+            parcela.parcelaAtual = row.parcelaAtual
+            parcela.dataParcela = row.dataParcela
+            parcela.idLancamento = row.idLancamento
+        }
+    }
+
+    return parcelas
+}
+
 const readParcelasByLancamento = async (idLancamento:number):Promise<Parcela[]> => {
     let sql = `select idConta, idUsuario, idLancamento, dataParcela, parcelaAtual, valorParcela, dataInclusao, ativo from Parcela where idLancamento = $1`
     let params = [idLancamento]
@@ -125,6 +152,24 @@ const readParcelasByLancamento = async (idLancamento:number):Promise<Parcela[]> 
     }
 
     return parcelas
+}
+
+const readParcelaMinDate = async (idConta:number):Promise<Date> => {
+    let sql = `select MIN(dataParcela)::Date from Parcela where idConta = $1`
+    let params = [idConta]
+
+    const result = await pool.query(sql, params)
+
+    return result
+}
+
+const readParcelaMaxDate = async (idConta:number):Promise<Date> => {
+    let sql = `select MAX(dataParcela)::Date from Parcela where idConta = $1`
+    let params = [idConta]
+
+    const result = await pool.query(sql, params)
+
+    return result
 }
 
 const deleteParcelas = async (idsParcela:number[]) => {
@@ -166,7 +211,10 @@ export {
     updateParcela,
     readParcelas,
     readParcelasByConta,
+    readParcelasByMonth,
     readParcelasByLancamento,
+    readParcelaMinDate,
+    readParcelaMaxDate,
     deleteParcelas,
     deleteParcelasByLancamento,
 }
