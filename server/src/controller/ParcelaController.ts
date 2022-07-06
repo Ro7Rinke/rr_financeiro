@@ -3,10 +3,11 @@ import 'moment/locale/pt'
 
 import currencyjs from 'currency.js'
 
-import { createParcela } from '../dao/ParcelaDAO';
+import { createParcela, readParcelaMaxDate, readParcelaMinDate } from '../dao/ParcelaDAO';
 
 import Lancamento from "../model/Lancamento";
 import Parcela from "../model/Parcela";
+import MonthType from '../type/MonthType';
 
 const calculateValueParcela = (valorTotal:number, parcelaTotal:number) => {
     const valorParcela = currencyjs(valorTotal).divide(parcelaTotal)
@@ -43,4 +44,30 @@ export const generateParcelaByLancamento = (lancamento:Lancamento) => {
 
 export const addParcela = async (parcela:Parcela) => {
     await createParcela(parcela)
+}
+
+export const getMonthList = async (idConta:number):Promise<Array<MonthType>> => {
+    let minDate = moment(await readParcelaMinDate(idConta))
+    const maxDate = moment(await readParcelaMaxDate(idConta))
+    const actualDate = moment()
+
+    let monthList:Array<MonthType> = []
+
+    let counter = 1
+
+    while( minDate.month() <= maxDate.month() || minDate.year() < maxDate.year()){
+
+        const month:MonthType = {
+            date: minDate.toDate(),
+            id: counter,
+            //id: `${minDate.format('MM')}/${minDate.format('YYYY')}`,
+            selected: minDate.month() == actualDate.month() && minDate.year() == actualDate.year()
+        }
+        monthList.push(month)
+
+        minDate.add(1, 'month')
+        counter++
+    }
+
+    return monthList
 }

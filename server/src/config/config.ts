@@ -1,6 +1,6 @@
 import { isDebug } from "../controller/args"
 import fs from 'fs'
-import { Credential } from "../model/Type"
+import Credential from "../type/Credential"
 
 export const credentials:Credential = JSON.parse(<string><unknown>fs.readFileSync(
     isDebug() 

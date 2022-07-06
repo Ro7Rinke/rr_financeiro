@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import { Dimensions, View, StyleSheet, Text, FlatList, TouchableOpacity, ScrollView } from 'react-native'
 
 import TotalProgressBar from '../../components/TotalProgressBar/TotalProgressBar'
@@ -18,6 +18,8 @@ import * as targetValueAction from '../../redux/actions/targetValueAction'
 
 import moment from 'moment'
 import 'moment/locale/pt'
+import { setMonthList } from '../../redux/actions/monthListAction'
+import { reloadMonthList } from '../../controller/HomeController'
 
 const windowWidth = Dimensions.get('window').width
 const windowHeight = Dimensions.get('window').height
@@ -35,78 +37,35 @@ const Home = (props) => {
         {id:5, categoryName: 'Outros', value: 54.12},
     ])
 
-    // const [installments, setInstallments] = useState([
-    //     {categoryId: 1,id: 1, name: 'Supermercado Big Bom', entryDate: new Date(), valueInstallment: 3894.26, currentInstallment: 1, totalInstallment: 2},
-    //     {categoryId: 4,id: 2, name: 'Fernando Auto Center', entryDate: new Date(), valueInstallment: 3894.26, currentInstallment: 1, totalInstallment: 2},
-    //     {categoryId: 4,id: 3, name: 'Conserto Toyota Suspensão', entryDate: new Date(), valueInstallment: 3894.26, currentInstallment: 1, totalInstallment: 2},
-    //     {categoryId: 2,id: 4, name: 'Farmácia', entryDate: new Date(), valueInstallment: 3894.26, currentInstallment: 1, totalInstallment: 2},
-    //     {categoryId: 3,id: 5, name: 'Mercado', entryDate: new Date(), valueInstallment: 3894.26, currentInstallment: 1, totalInstallment: 2},
-    //     {categoryId: 5,id: 6, name: 'Troca correia dentada civic', entryDate: new Date(), valueInstallment: 3894.26, currentInstallment: 1, totalInstallment: 2},
-    //     {categoryId: 1,id: 7, name: 'Farmácia', entryDate: new Date(), valueInstallment: 3894.26, currentInstallment: 1, totalInstallment: 2},
-    //     {categoryId: 2,id: 8, name: 'Farmácia', entryDate: new Date(), valueInstallment: 3894.26, currentInstallment: 1, totalInstallment: 2},
-    //     {categoryId: 5,id: 9, name: 'Farmácia', entryDate: new Date(), valueInstallment: 3894.26, currentInstallment: 1, totalInstallment: 2},
-    //     {categoryId: 5,id: 10, name: 'Farmácia', entryDate: new Date(), valueInstallment: 3894.26, currentInstallment: 1, totalInstallment: 2},
-    //     {categoryId: 3,id: 11, name: 'Mercado', entryDate: new Date(), valueInstallment: 53.12, currentInstallment: 1, totalInstallment: 1},
-    //     {categoryId: 1,id: 12, name: 'Mercado', entryDate: new Date(), valueInstallment: 53.12, currentInstallment: 1, totalInstallment: 1},
-    //     {categoryId: 1,id: 13, name: 'Mercado', entryDate: new Date(), valueInstallment: 53.12, currentInstallment: 1, totalInstallment: 1},
-    //     {categoryId: 1,id: 14, name: 'Mercado', entryDate: new Date(), valueInstallment: 53.12, currentInstallment: 1, totalInstallment: 1},
-    //     {categoryId: 1,id: 15, name: 'Mercado', entryDate: new Date(), valueInstallment: 53.12, currentInstallment: 1, totalInstallment: 1},
-    //     {categoryId: 1,id: 16, name: 'Mercado', entryDate: new Date(), valueInstallment: 53.12, currentInstallment: 1, totalInstallment: 1},
-    //     {categoryId: 1,id: 17, name: 'Mercado', entryDate: new Date(), valueInstallment: 53.12, currentInstallment: 1, totalInstallment: 1},
-    //     {categoryId: 1,id: 18, name: 'Mercado', entryDate: new Date(), valueInstallment: 53.12, currentInstallment: 1, totalInstallment: 1},
-    //     {categoryId: 1,id: 19, name: 'Mercado', entryDate: new Date(), valueInstallment: 53.12, currentInstallment: 1, totalInstallment: 1},
-    //     {categoryId: 1,id: 20, name: 'Mercado', entryDate: new Date(), valueInstallment: 53.12, currentInstallment: 1, totalInstallment: 1},
-    // ])
-
-    const [monthList, setMonthList] = useState([
-        {id: 1, date: moment('01/01/2021', 'DD/MM/YYYY', true), selected: false},
-        {id: 2, date: moment('01/02/2021', 'DD/MM/YYYY', true), selected: false},
-        {id: 3, date: moment('01/03/2021', 'DD/MM/YYYY', true), selected: false},
-        {id: 4, date: moment('01/04/2021', 'DD/MM/YYYY', true), selected: false},
-        {id: 5, date: moment('01/05/2021', 'DD/MM/YYYY', true), selected: false},
-        {id: 6, date: moment('01/06/2021', 'DD/MM/YYYY', true), selected: false},
-        {id: 7, date: moment('01/07/2021', 'DD/MM/YYYY', true), selected: false},
-        {id: 8, date: moment('01/08/2021', 'DD/MM/YYYY', true), selected: false},
-        {id: 9, date: moment('01/09/2021', 'DD/MM/YYYY', true), selected: false},
-        {id: 10, date: moment('01/10/2021', 'DD/MM/YYYY', true), selected: false},
-        {id: 11, date: moment('01/11/2021', 'DD/MM/YYYY', true), selected: false},
-        {id: 12, date: moment('01/12/2021', 'DD/MM/YYYY', true), selected: false},
-        {id: 21, date: moment('01/01/2022', 'DD/MM/YYYY', true), selected: false},
-        {id: 22, date: moment('01/02/2022', 'DD/MM/YYYY', true), selected: false},
-        {id: 23, date: moment('01/03/2022', 'DD/MM/YYYY', true), selected: false},
-        {id: 24, date: moment('01/04/2022', 'DD/MM/YYYY', true), selected: true},
-        {id: 25, date: moment('01/05/2022', 'DD/MM/YYYY', true), selected: false},
-        {id: 26, date: moment('01/06/2022', 'DD/MM/YYYY', true), selected: false},
-        {id: 27, date: moment('01/07/2022', 'DD/MM/YYYY', true), selected: false},
-        {id: 28, date: moment('01/08/2022', 'DD/MM/YYYY', true), selected: false},
-        {id: 29, date: moment('01/09/2022', 'DD/MM/YYYY', true), selected: false},
-        {id: 210, date: moment('01/10/2022', 'DD/MM/YYYY', true), selected: false},
-        {id: 211, date: moment('01/11/2022', 'DD/MM/YYYY', true), selected: false},
-        {id: 212, date: moment('01/12/2022', 'DD/MM/YYYY', true), selected: false},
-    ])
-
     const [totalValue, setTotalValue] = useState(2000)
-    // const [targetValue, setTargetValue] = useState(200)
 
     const ref = useRef(null)
 
     const selectMonth = (id) => {
-        ref.current?.scrollToIndex({
-            index: monthList.findIndex(element => element.id == id),
-            animemated: true,
-            viewPosition: 0.5,
-            viewOffset: id == 1 ? windowWidth/3 : -windowWidth/3
-        })
-
         let newMonthList = []
-        monthList.map(element => {
+        props.monthList.map(element => {
             newMonthList.push({...element, selected: element.id == id})
         })
 
-        setMonthList(newMonthList)
+        store.dispatch(setMonthList(newMonthList))
     }
 
-    return (
+    useEffect(() => {
+        reloadMonthList()
+    }, [])
+
+    useEffect(() => {
+        const index = props.monthList.findIndex(element => element.selected)
+
+        ref.current?.scrollToIndex({
+            index,
+            animemated: true,
+            viewPosition: 0.5,
+            viewOffset: index == 0 ? windowWidth/3 : -windowWidth/3
+        })
+    }, [props.monthList])
+
+    return props.monthList.length > 0 ? (
         <View  style={styles.container}>
             
             <FlatList keyExtractor={item => item.id}
@@ -127,10 +86,10 @@ const Home = (props) => {
                                         <MonthHeader date={item.date} selected={item.selected}/>
                                     </TouchableOpacity>
                                 )}
-                                initialScrollIndex={monthList.findIndex( element => element.selected)}
+                                //initialScrollIndex={props.monthList.findIndex( element => element.selected)}
                                 scrollEnabled={false}
                                 getItemLayout={(data, index) => ({length: windowWidth/3, offset: (windowWidth/3) * index, index})}
-                                data={monthList}
+                                data={props.monthList}
                                 horizontal={true}
                                 showsHorizontalScrollIndicator={false}
                                 keyExtractor={item => item.id} />
@@ -167,7 +126,7 @@ const Home = (props) => {
                 {/* <Icon name='plus' size={30} color='#01a699' /> */}
             </TouchableOpacity>
         </View>
-    )
+    ) : (<View></View>)
 }
 
 const styles = StyleSheet.create({
@@ -201,7 +160,8 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
     return {
         targetValue: state.targetValue,
-        installments: state.installments
+        installments: state.installments,
+        monthList: state.monthList,
     }
 }
 

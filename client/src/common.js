@@ -31,3 +31,5 @@ export const colors = {
         '5': '#0000ff',
     }
 }
+
+export const baseURL = 'http://192.168.200.107:8001'
