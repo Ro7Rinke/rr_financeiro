@@ -12,7 +12,9 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.1",
+    "currency.js": "^2.0.4",
     "express": "^4.17.2",
+    "moment": "^2.29.3",
     "pg": "^8.7.3",
     "winston": "^3.5.1"
   },

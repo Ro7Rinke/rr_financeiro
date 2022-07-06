@@ -48,10 +48,12 @@ const readContas = async (idsConta:Array<number>):Promise<Conta[]> => {
         for(const row of result.rows){
             let conta = new Conta()
 
-            conta.id = row.id
-            conta.senha = row.senha
-            conta.email = row.email
-            conta.nome = row.nome
+            conta.id = row[`id`.toLowerCase()]
+            conta.senha = row[`senha`.toLowerCase()]
+            conta.email = row[`email`.toLowerCase()]
+            conta.nome = row[`nome`.toLowerCase()]
+
+            contas.push(conta)
         }
     }
 

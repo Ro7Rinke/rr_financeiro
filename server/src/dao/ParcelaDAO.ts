@@ -6,12 +6,12 @@ const createParcela = async (parcela:Parcela) => {
     let params = [
         parcela.idConta,
         parcela.idUsuario,
-        parcela.ativo,
-        parcela.dataInclusao,
-        parcela.valorParcela,
-        parcela.parcelaAtual,
-        parcela.dataParcela,
         parcela.idLancamento,
+        parcela.dataParcela,
+        parcela.parcelaAtual,
+        parcela.valorParcela,
+        parcela.dataInclusao,
+        parcela.ativo,
     ]
 
     const result = await pool.query(sql, params)
@@ -24,12 +24,12 @@ const updateParcela = async (parcela:Parcela) => {
     let params = [
         parcela.idConta,
         parcela.idUsuario,
-        parcela.ativo,
-        parcela.dataInclusao,
-        parcela.valorParcela,
-        parcela.parcelaAtual,
-        parcela.dataParcela,
         parcela.idLancamento,
+        parcela.dataParcela,
+        parcela.parcelaAtual,
+        parcela.valorParcela,
+        parcela.dataInclusao,
+        parcela.ativo,
         parcela.id
     ]
 
@@ -58,15 +58,17 @@ const readParcelas = async (idsParcela:Array<number>):Promise<Parcela[]> => {
         for(const row of result.rows){
             let parcela = new Parcela()
 
-            parcela.id = row.id
-            parcela.idConta = row.idConta
-            parcela.idUsuario = row.idUsuario
-            parcela.ativo = row.ativo
-            parcela.dataInclusao = row.dataInclusao
-            parcela.valorParcela = row.valorParcela
-            parcela.parcelaAtual = row.parcelaAtual
-            parcela.dataParcela = row.dataParcela
-            parcela.idLancamento = row.idLancamento
+            parcela.id = row[`id`.toLowerCase()]
+            parcela.idConta = row[`idConta`.toLowerCase()]
+            parcela.idUsuario = row[`idUsuario`.toLowerCase()]
+            parcela.idLancamento = row[`idLancamento`.toLowerCase()]
+            parcela.dataParcela = row[`dataParcela`.toLowerCase()]
+            parcela.parcelaAtual = row[`parcelaAtual`.toLowerCase()]
+            parcela.valorParcela = row[`valorParcela`.toLowerCase()]
+            parcela.dataInclusao = row[`dataInclusao`.toLowerCase()]
+            parcela.ativo = row[`ativo`.toLowerCase()]
+
+            parcelas.push(parcela)
         }
     }
 
@@ -74,7 +76,7 @@ const readParcelas = async (idsParcela:Array<number>):Promise<Parcela[]> => {
 }
 
 const readParcelasByConta = async (idConta:number):Promise<Parcela[]> => {
-    let sql = `select idConta, idUsuario, idLancamento, dataParcela, parcelaAtual, valorParcela, dataInclusao, ativo from Parcela where idConta = $1`
+    let sql = `select id, idConta, idUsuario, idLancamento, dataParcela, parcelaAtual, valorParcela, dataInclusao, ativo from Parcela where idConta = $1`
     let params = [idConta]
 
     const result = await pool.query(sql, params)
@@ -85,15 +87,17 @@ const readParcelasByConta = async (idConta:number):Promise<Parcela[]> => {
         for(const row of result.rows){
             let parcela = new Parcela()
 
-            parcela.id = row.id
-            parcela.idConta = row.idConta
-            parcela.idUsuario = row.idUsuario
-            parcela.ativo = row.ativo
-            parcela.dataInclusao = row.dataInclusao
-            parcela.valorParcela = row.valorParcela
-            parcela.parcelaAtual = row.parcelaAtual
-            parcela.dataParcela = row.dataParcela
-            parcela.idLancamento = row.idLancamento
+            parcela.id = row[`id`.toLowerCase()]
+            parcela.idConta = row[`idConta`.toLowerCase()]
+            parcela.idUsuario = row[`idUsuario`.toLowerCase()]
+            parcela.idLancamento = row[`idLancamento`.toLowerCase()]
+            parcela.dataParcela = row[`dataParcela`.toLowerCase()]
+            parcela.parcelaAtual = row[`parcelaAtual`.toLowerCase()]
+            parcela.valorParcela = row[`valorParcela`.toLowerCase()]
+            parcela.dataInclusao = row[`dataInclusao`.toLowerCase()]
+            parcela.ativo = row[`ativo`.toLowerCase()]
+
+            parcelas.push(parcela)
         }
     }
 
@@ -101,8 +105,8 @@ const readParcelasByConta = async (idConta:number):Promise<Parcela[]> => {
 }
 
 const readParcelasByMonth = async (idConta:number, month:number):Promise<Parcela[]> => {
-    let sql = `select idConta, idUsuario, idLancamento, dataParcela, parcelaAtual, valorParcela, dataInclusao, ativo from Parcela where idConta = $1 and EXTRACT(MONTH from Date dataParcela) = $2`
-    let params = [idConta]
+    let sql = `select id, idConta, idUsuario, idLancamento, dataParcela, parcelaAtual, valorParcela, dataInclusao, ativo from Parcela where idConta = $1 and EXTRACT(MONTH from dataParcela) = $2`
+    let params = [idConta, month]
 
     const result = await pool.query(sql, params)
 
@@ -112,15 +116,17 @@ const readParcelasByMonth = async (idConta:number, month:number):Promise<Parcela
         for(const row of result.rows){
             let parcela = new Parcela()
 
-            parcela.id = row.id
-            parcela.idConta = row.idConta
-            parcela.idUsuario = row.idUsuario
-            parcela.ativo = row.ativo
-            parcela.dataInclusao = row.dataInclusao
-            parcela.valorParcela = row.valorParcela
-            parcela.parcelaAtual = row.parcelaAtual
-            parcela.dataParcela = row.dataParcela
-            parcela.idLancamento = row.idLancamento
+            parcela.id = row[`id`.toLowerCase()]
+            parcela.idConta = row[`idConta`.toLowerCase()]
+            parcela.idUsuario = row[`idUsuario`.toLowerCase()]
+            parcela.idLancamento = row[`idLancamento`.toLowerCase()]
+            parcela.dataParcela = row[`dataParcela`.toLowerCase()]
+            parcela.parcelaAtual = row[`parcelaAtual`.toLowerCase()]
+            parcela.valorParcela = row[`valorParcela`.toLowerCase()]
+            parcela.dataInclusao = row[`dataInclusao`.toLowerCase()]
+            parcela.ativo = row[`ativo`.toLowerCase()]
+
+            parcelas.push(parcela)
         }
     }
 
@@ -128,7 +134,7 @@ const readParcelasByMonth = async (idConta:number, month:number):Promise<Parcela
 }
 
 const readParcelasByLancamento = async (idLancamento:number):Promise<Parcela[]> => {
-    let sql = `select idConta, idUsuario, idLancamento, dataParcela, parcelaAtual, valorParcela, dataInclusao, ativo from Parcela where idLancamento = $1`
+    let sql = `select id, idConta, idUsuario, idLancamento, dataParcela, parcelaAtual, valorParcela, dataInclusao, ativo from Parcela where idLancamento = $1`
     let params = [idLancamento]
 
     const result = await pool.query(sql, params)
@@ -139,15 +145,17 @@ const readParcelasByLancamento = async (idLancamento:number):Promise<Parcela[]> 
         for(const row of result.rows){
             let parcela = new Parcela()
 
-            parcela.id = row.id
-            parcela.idConta = row.idConta
-            parcela.idUsuario = row.idUsuario
-            parcela.ativo = row.ativo
-            parcela.dataInclusao = row.dataInclusao
-            parcela.valorParcela = row.valorParcela
-            parcela.parcelaAtual = row.parcelaAtual
-            parcela.dataParcela = row.dataParcela
-            parcela.idLancamento = row.idLancamento
+            parcela.id = row[`id`.toLowerCase()]
+            parcela.idConta = row[`idConta`.toLowerCase()]
+            parcela.idUsuario = row[`idUsuario`.toLowerCase()]
+            parcela.idLancamento = row[`idLancamento`.toLowerCase()]
+            parcela.dataParcela = row[`dataParcela`.toLowerCase()]
+            parcela.parcelaAtual = row[`parcelaAtual`.toLowerCase()]
+            parcela.valorParcela = row[`valorParcela`.toLowerCase()]
+            parcela.dataInclusao = row[`dataInclusao`.toLowerCase()]
+            parcela.ativo = row[`ativo`.toLowerCase()]
+
+            parcelas.push(parcela)
         }
     }
 
@@ -160,7 +168,7 @@ const readParcelaMinDate = async (idConta:number):Promise<Date> => {
 
     const result = await pool.query(sql, params)
 
-    return result
+    return result.rows[0].min
 }
 
 const readParcelaMaxDate = async (idConta:number):Promise<Date> => {
@@ -169,7 +177,7 @@ const readParcelaMaxDate = async (idConta:number):Promise<Date> => {
 
     const result = await pool.query(sql, params)
 
-    return result
+    return result.rows[0].max
 }
 
 const deleteParcelas = async (idsParcela:number[]) => {

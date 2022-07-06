@@ -64,18 +64,20 @@ const readLancamentos = async (idsLancamento:Array<number>):Promise<Lancamento[]
         for(const row of result.rows){
             let lancamento = new Lancamento()
 
-            lancamento.id = row.id
-            lancamento.idConta = row.idConta
-            lancamento.idUsuario = row.idUsuario
-            lancamento.nome = row.nome
-            lancamento.descricao = row.descricao
-            lancamento.ativo = row.ativo
-            lancamento.dataInclusao = row.dataInclusao
-            lancamento.valorTotal = row.valorTotal
-            lancamento.parcelaTotal = row.parcelaTotal
-            lancamento.idCategoria = row.idCategoria
-            lancamento.dataLancamento = row.dataLancamento
-            lancamento.idLancamentoPeriodico = row.idLancamentoPeriodico
+            lancamento.id = row[`id`.toLowerCase()]
+            lancamento.idConta = row[`idConta`.toLowerCase()]
+            lancamento.idUsuario = row[`idUsuario`.toLowerCase()]
+            lancamento.nome = row[`nome`.toLowerCase()]
+            lancamento.descricao = row[`descricao`.toLowerCase()]
+            lancamento.ativo = row[`ativo`.toLowerCase()]
+            lancamento.dataInclusao = row[`dataInclusao`.toLowerCase()]
+            lancamento.valorTotal = row[`valorTotal`.toLowerCase()]
+            lancamento.parcelaTotal = row[`parcelaTotal`.toLowerCase()]
+            lancamento.idCategoria = row[`idCategoria`.toLowerCase()]
+            lancamento.dataLancamento = row[`dataLancamento`.toLowerCase()]
+            lancamento.idLancamentoPeriodico = row[`idLancamentoPeriodico`.toLowerCase()]
+
+            lancamentos.push(lancamento)
         }
     }
 
@@ -94,18 +96,20 @@ const readLancamentosByConta = async (idConta:number):Promise<Lancamento[]> => {
         for(const row of result.rows){
             let lancamento = new Lancamento()
 
-            lancamento.id = row.id
-            lancamento.idConta = row.idConta
-            lancamento.idUsuario = row.idUsuario
-            lancamento.nome = row.nome
-            lancamento.descricao = row.descricao
-            lancamento.ativo = row.ativo
-            lancamento.dataInclusao = row.dataInclusao
-            lancamento.valorTotal = row.valorTotal
-            lancamento.parcelaTotal = row.parcelaTotal
-            lancamento.idCategoria = row.idCategoria
-            lancamento.dataLancamento = row.dataLancamento
-            lancamento.idLancamentoPeriodico = row.idLancamentoPeriodico
+            lancamento.id = row[`id`.toLowerCase()]
+            lancamento.idConta = row[`idConta`.toLowerCase()]
+            lancamento.idUsuario = row[`idUsuario`.toLowerCase()]
+            lancamento.nome = row[`nome`.toLowerCase()]
+            lancamento.descricao = row[`descricao`.toLowerCase()]
+            lancamento.ativo = row[`ativo`.toLowerCase()]
+            lancamento.dataInclusao = row[`dataInclusao`.toLowerCase()]
+            lancamento.valorTotal = row[`valorTotal`.toLowerCase()]
+            lancamento.parcelaTotal = row[`parcelaTotal`.toLowerCase()]
+            lancamento.idCategoria = row[`idCategoria`.toLowerCase()]
+            lancamento.dataLancamento = row[`dataLancamento`.toLowerCase()]
+            lancamento.idLancamentoPeriodico = row[`idLancamentoPeriodico`.toLowerCase()]
+
+            lancamentos.push(lancamento)
         }
     }
 

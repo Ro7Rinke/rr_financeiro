@@ -48,10 +48,12 @@ const readCategorias = async (idsCategoria:Array<number>):Promise<Categoria[]> =
         for(const row of result.rows){
             let categoria = new Categoria()
 
-            categoria.id = row.id
-            categoria.nome = row.nome
-            categoria.descricao = row.descricao
-            categoria.ativo = row.ativo
+            categoria.id = row[`id`.toLowerCase()]
+            categoria.nome = row[`nome`.toLowerCase()]
+            categoria.descricao = row[`descricao`.toLowerCase()]
+            categoria.ativo = row[`ativo`.toLowerCase()]
+
+            categorias.push(categoria)
         }
     }
 

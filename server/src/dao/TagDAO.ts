@@ -46,9 +46,11 @@ const readTags = async (idsTag:Array<number>):Promise<Tag[]> => {
         for(const row of result.rows){
             let tag = new Tag()
 
-            tag.id = row.id
-            tag.idConta = row.idConta
-            tag.nome = row.nome
+            tag.id = row[`id`.toLowerCase()]
+            tag.idConta = row[`idConta`.toLowerCase()]
+            tag.nome = row[`nome`.toLowerCase()]
+
+            tags.push(tag)
         }
     }
 
@@ -67,9 +69,11 @@ const readTagsByConta = async (idConta:number):Promise<Tag[]> => {
         for(const row of result.rows){
             let tag = new Tag()
 
-            tag.id = row.id
-            tag.idConta = row.idConta
-            tag.nome = row.nome
+            tag.id = row[`id`.toLowerCase()]
+            tag.idConta = row[`idConta`.toLowerCase()]
+            tag.nome = row[`nome`.toLowerCase()]
+
+            tags.push(tag)
         }
     }
 

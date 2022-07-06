@@ -46,9 +46,11 @@ const readUsuarios = async (idsUsuario:Array<number>):Promise<Usuario[]> => {
         for(const row of result.rows){
             let usuario = new Usuario()
 
-            usuario.id = row.id
-            usuario.idConta = row.idConta
-            usuario.nome = row.nome
+            usuario.id = row[`id`.toLowerCase()]
+            usuario.idConta = row[`idConta`.toLowerCase()]
+            usuario.nome = row[`nome`.toLowerCase()]
+
+            usuarios.push(usuario)
         }
     }
 
@@ -67,9 +69,11 @@ const readUsuariosByConta = async (idConta:number):Promise<Usuario[]> => {
         for(const row of result.rows){
             let usuario = new Usuario()
 
-            usuario.id = row.id
-            usuario.idConta = row.idConta
-            usuario.nome = row.nome
+            usuario.id = row[`id`.toLowerCase()]
+            usuario.idConta = row[`idConta`.toLowerCase()]
+            usuario.nome = row[`nome`.toLowerCase()]
+
+            usuarios.push(usuario)
         }
     }
 

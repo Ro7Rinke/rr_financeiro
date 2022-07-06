@@ -1,5 +1,5 @@
 import { Pool } from "pg"
-import { credentials } from "../config"
+import { credentials } from "../config/config"
 
 const pool = new Pool(credentials)
 
