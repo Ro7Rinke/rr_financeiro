@@ -48,10 +48,9 @@ export const toArray = (object = {}) => {
     return array
 }
 
-export const getReferenceDate = (date) => {
-    if(!isMoment(date))
-        date = moment(date)
-
+export const getReferenceDate = (inputDate) => {
+    const date = isMoment(inputDate) ? inputDate : moment(inputDate)
+    
     const monthText = date.format('MM')
     const yearText = date.format('YYYY')
 

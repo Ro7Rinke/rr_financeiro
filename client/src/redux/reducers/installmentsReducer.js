@@ -15,9 +15,9 @@ const initialState = {
         {installmentDate: moment(), categoryId: 1, id: 7, name: 'Farmácia', entryDate: moment(), valueInstallment: 3894.26, currentInstallment: 1, totalInstallment: 2},
     ],
     '09/2022': [
-        {installmentDate: moment('01/09/2022', 'DD/MM/YYYY',), categoryId: 3, id: 15, name: 'Mercado', entryDate: moment(), valueInstallment: 3894.26, currentInstallment: 1, totalInstallment: 2},
-        {installmentDate: moment('01/09/2022', 'DD/MM/YYYY',), categoryId: 5, id: 16, name: 'Troca correia dentada civic', entryDate: moment(), valueInstallment: 3894.26, currentInstallment: 1, totalInstallment: 2},
-        {installmentDate: moment('01/09/2022', 'DD/MM/YYYY',), categoryId: 1, id: 17, name: 'Farmácia', entryDate: moment(), valueInstallment: 3894.26, currentInstallment: 1, totalInstallment: 2},
+        {installmentDate: new moment('01/09/2022', 'DD/MM/YYYY'), categoryId: 3, id: 15, name: 'Mercado', entryDate: moment(), valueInstallment: 3894.26, currentInstallment: 1, totalInstallment: 2},
+        {installmentDate: new moment('01/09/2022', 'DD/MM/YYYY'), categoryId: 5, id: 16, name: 'Troca correia dentada civic', entryDate: moment(), valueInstallment: 3894.26, currentInstallment: 1, totalInstallment: 2},
+        {installmentDate: new moment('01/09/2022', 'DD/MM/YYYY'), categoryId: 1, id: 17, name: 'Farmácia', entryDate: moment(), valueInstallment: 3894.26, currentInstallment: 1, totalInstallment: 2},
     ]
 }
 
@@ -37,7 +37,7 @@ const installments = (state = initialState, action) => {
 const addInstallment = (state, action) => {
     let newState = {...state}
 
-    const referenceDate = getReferenceDate(action.data.entryDate)
+    const referenceDate = getReferenceDate(action.data.installmentDate)
 
     if(!state[referenceDate])
         newState[referenceDate] = []
@@ -52,7 +52,7 @@ const addInstallment = (state, action) => {
 const removeInstallment = (state, action) => {
     let newState = {...state}
 
-    const referenceDate = getReferenceDate(action.data.entryDate)
+    const referenceDate = getReferenceDate(action.data.installmentDate)
 
     if(!newState[referenceDate])
         return newState

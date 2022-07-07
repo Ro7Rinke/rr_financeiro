@@ -14,7 +14,6 @@ import { useNavigation } from '@react-navigation/native'
 
 import {connect} from 'react-redux'
 import store from '../../redux/store'
-import * as targetValueAction from '../../redux/actions/targetValueAction' 
 
 import moment from 'moment'
 import 'moment/locale/pt'
@@ -86,7 +85,6 @@ const Home = (props) => {
                                         <MonthHeader date={item.date} selected={item.selected}/>
                                     </TouchableOpacity>
                                 )}
-                                //initialScrollIndex={props.monthList.findIndex( element => element.selected)}
                                 scrollEnabled={false}
                                 getItemLayout={(data, index) => ({length: windowWidth/3, offset: (windowWidth/3) * index, index})}
                                 data={props.monthList}
@@ -111,12 +109,6 @@ const Home = (props) => {
                     renderItem={({item}) => (
                         <Installment
                             installment={item} 
-                            // entryDate={item.entryDate}
-                            // valueInstallment={item.valueInstallment}
-                            // currentInstallment={item.currentInstallment}
-                            // totalInstallment={item.totalInstallment} 
-                            // name={item.name}
-                            // categoryId={item.categoryId}
                             key={item.id}/> )} />
 
             <TouchableOpacity

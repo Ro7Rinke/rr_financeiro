@@ -4,13 +4,13 @@ import { colors, formatMoney } from '../../common'
 
 import store from '../../redux/store'
 import * as installmentsAction from '../../redux/actions/installmentsAction' 
+import moment, { isMoment } from 'moment'
 
 const Installment = (props) => {
-    // const day = props.installment.entryDate.getDate()
-    // const month = props.installment.entryDate.getMonth() + 1
-    const dayText = props.installment.entryDate.format('DD')//day < 10 ? `0${day}` : day
-    const monthText = props.installment.entryDate.format('MM')//month < 10 ? `0${month}` : month
-    const year = props.installment.entryDate.format('YYYY')//props.installment.entryDate.getFullYear()
+    const entryDate = isMoment(props.installment.entryDate) ? props.installment.entryDate : moment(props.installment.entryDate)
+    const dayText = entryDate.format('DD')
+    const monthText = entryDate.format('MM')
+    const year = entryDate.format('YYYY')
     
     const renderInstallment = props.installment.totalInstallment > 1 
         ? <Text style={styles.textSmall}>{props.installment.currentInstallment}/{props.installment.totalInstallment}</Text>
@@ -20,7 +20,7 @@ const Installment = (props) => {
 
     const deleteInstallment = () => {
 
-        store.dispatch(installmentsAction.removeInstallment({id: props.installment.id}))
+        store.dispatch(installmentsAction.removeInstallment(props.installment))
 
         setShowDeleteModal(!showDeleteModal)
     }

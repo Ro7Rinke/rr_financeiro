@@ -7,7 +7,5 @@ export const reloadMonthList = async () => {
 
     const monthList = await retrieveMonthList(idConta)
 
-    console.log(monthList)
-
     store.dispatch(setMonthList(monthList))
 }

@@ -44,7 +44,6 @@ const TotalProgressBar = (props) => {
                 }//'#ffff00'//'#0000aa'//'#00ff00'//'#ff0000'
                 lineCap="round"
                 duration={1500}
-                // onAnimationComplete={() => console.log('onAnimationComplete')}
                 backgroundColor="#3d587544" >
                 {
                     (fill) => (
