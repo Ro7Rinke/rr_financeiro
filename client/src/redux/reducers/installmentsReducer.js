@@ -1,32 +1,65 @@
 import moment from "moment"
 import 'moment/locale/pt'
+import { getReferenceDate } from "../../common"
 
 import { types } from "../actions/installmentsAction"
 
-const initialState = [
-    {categoryId: 1,id: 1, name: 'Supermercado Big Bom', entryDate: moment(), valueInstallment: 3894.26, currentInstallment: 1, totalInstallment: 2},
-    {categoryId: 4,id: 2, name: 'Fernando Auto Center', entryDate: moment(), valueInstallment: 3894.26, currentInstallment: 1, totalInstallment: 2},
-    {categoryId: 4,id: 3, name: 'Conserto Toyota Suspensão', entryDate: moment(), valueInstallment: 3894.26, currentInstallment: 1, totalInstallment: 2},
-    {categoryId: 2,id: 4, name: 'Farmácia', entryDate: moment(), valueInstallment: 3894.26, currentInstallment: 1, totalInstallment: 2},
-    {categoryId: 3,id: 5, name: 'Mercado', entryDate: moment(), valueInstallment: 3894.26, currentInstallment: 1, totalInstallment: 2},
-    {categoryId: 5,id: 6, name: 'Troca correia dentada civic', entryDate: moment(), valueInstallment: 3894.26, currentInstallment: 1, totalInstallment: 2},
-    {categoryId: 1,id: 7, name: 'Farmácia', entryDate: moment(), valueInstallment: 3894.26, currentInstallment: 1, totalInstallment: 2},
-]
+const initialState = {
+    '07/2022': [
+        {installmentDate: moment(), categoryId: 1, id: 1, name: 'Supermercado Big Bom', entryDate: moment(), valueInstallment: 3894.26, currentInstallment: 1, totalInstallment: 2},
+        {installmentDate: moment(), categoryId: 4, id: 2, name: 'Fernando Auto Center', entryDate: moment(), valueInstallment: 3894.26, currentInstallment: 1, totalInstallment: 2},
+        {installmentDate: moment(), categoryId: 4, id: 3, name: 'Conserto Toyota Suspensão', entryDate: moment(), valueInstallment: 3894.26, currentInstallment: 1, totalInstallment: 2},
+        {installmentDate: moment(), categoryId: 2, id: 4, name: 'Farmácia', entryDate: moment(), valueInstallment: 3894.26, currentInstallment: 1, totalInstallment: 2},
+        {installmentDate: moment(), categoryId: 3, id: 5, name: 'Mercado', entryDate: moment(), valueInstallment: 3894.26, currentInstallment: 1, totalInstallment: 2},
+        {installmentDate: moment(), categoryId: 5, id: 6, name: 'Troca correia dentada civic', entryDate: moment(), valueInstallment: 3894.26, currentInstallment: 1, totalInstallment: 2},
+        {installmentDate: moment(), categoryId: 1, id: 7, name: 'Farmácia', entryDate: moment(), valueInstallment: 3894.26, currentInstallment: 1, totalInstallment: 2},
+    ],
+    '09/2022': [
+        {installmentDate: moment('01/09/2022', 'DD/MM/YYYY',), categoryId: 3, id: 15, name: 'Mercado', entryDate: moment(), valueInstallment: 3894.26, currentInstallment: 1, totalInstallment: 2},
+        {installmentDate: moment('01/09/2022', 'DD/MM/YYYY',), categoryId: 5, id: 16, name: 'Troca correia dentada civic', entryDate: moment(), valueInstallment: 3894.26, currentInstallment: 1, totalInstallment: 2},
+        {installmentDate: moment('01/09/2022', 'DD/MM/YYYY',), categoryId: 1, id: 17, name: 'Farmácia', entryDate: moment(), valueInstallment: 3894.26, currentInstallment: 1, totalInstallment: 2},
+    ]
+}
 
 const installments = (state = initialState, action) => {
     switch(action.type){
         case types.addInstallment:
-            return [
-                ...state,
-                action.data
-            ]
+            return addInstallment(state, action)
 
         case types.removeInstallment:
-            return state.filter(installment => installment.id != action.data.id)
+            return removeInstallment({...state}, action)
 
         default:
             return state
     }
+}
+
+const addInstallment = (state, action) => {
+    let newState = {...state}
+
+    const referenceDate = getReferenceDate(action.data.entryDate)
+
+    if(!state[referenceDate])
+        newState[referenceDate] = []
+    else
+        newState = removeInstallment(state, action)
+
+    newState[referenceDate] = [...newState[referenceDate], action.data]
+
+    return newState
+}
+
+const removeInstallment = (state, action) => {
+    let newState = {...state}
+
+    const referenceDate = getReferenceDate(action.data.entryDate)
+
+    if(!newState[referenceDate])
+        return newState
+
+    newState[referenceDate] = newState[referenceDate].filter(element => element.id != action.data.id)
+
+    return newState
 }
 
 export default installments

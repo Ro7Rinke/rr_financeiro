@@ -1,3 +1,6 @@
+import moment, { isMoment } from "moment";
+import 'moment/locale/pt'
+
 export const formatMoney = (amount, decimalCount = 2, decimal = ".", thousands = ",") => {
     try {
         decimalCount = Math.abs(decimalCount);
@@ -33,3 +36,24 @@ export const colors = {
 }
 
 export const baseURL = 'http://192.168.200.107:8001'
+
+export const toArray = (object = {}) => {
+    let array = []
+    
+    for(const key in object){
+        if(object.hasOwnProperty(key))
+            array.push(object[key])
+    }
+    
+    return array
+}
+
+export const getReferenceDate = (date) => {
+    if(!isMoment(date))
+        date = moment(date)
+
+    const monthText = date.format('MM')
+    const yearText = date.format('YYYY')
+
+    return `${monthText}/${yearText}`
+}

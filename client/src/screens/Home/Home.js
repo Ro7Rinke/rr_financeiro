@@ -8,7 +8,7 @@ import MonthHeader from '../../components/MonthHeader/MonthHeader'
 
 // import Icon from 'react-native-vector-icons/FontAwesome'
 
-import { colors } from '../../common'
+import { colors, getReferenceDate } from '../../common'
 
 import { useNavigation } from '@react-navigation/native'
 
@@ -107,7 +107,7 @@ const Home = (props) => {
                             </View>
                         </View>
                     )}
-                    data={props.installments}
+                    data={props.installments[getReferenceDate(props.monthList[props.monthList.findIndex(element => element.selected)].date)]}
                     renderItem={({item}) => (
                         <Installment
                             installment={item} 
