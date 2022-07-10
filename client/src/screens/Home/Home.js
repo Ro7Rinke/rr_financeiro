@@ -146,6 +146,7 @@ const Home = (props) => {
                             </View>
                         </View>
                     )}
+                    ListFooterComponent={(<View style={{height: 70}} />)}
                     data={props.installments[getReferenceDate(props.monthList[props.monthList.findIndex(element => element.selected)].date)]}
                     renderItem={({item}) => (
                         <Installment
