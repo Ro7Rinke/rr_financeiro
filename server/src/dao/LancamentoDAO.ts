@@ -71,7 +71,7 @@ const readLancamentos = async (idsLancamento:Array<number>):Promise<Lancamento[]
             lancamento.descricao = row[`descricao`.toLowerCase()]
             lancamento.ativo = row[`ativo`.toLowerCase()]
             lancamento.dataInclusao = row[`dataInclusao`.toLowerCase()]
-            lancamento.valorTotal = row[`valorTotal`.toLowerCase()]
+            lancamento.valorTotal = parseFloat(row[`valorTotal`.toLowerCase()])
             lancamento.parcelaTotal = row[`parcelaTotal`.toLowerCase()]
             lancamento.idCategoria = row[`idCategoria`.toLowerCase()]
             lancamento.dataLancamento = row[`dataLancamento`.toLowerCase()]
@@ -103,7 +103,7 @@ const readLancamentosByConta = async (idConta:number):Promise<Lancamento[]> => {
             lancamento.descricao = row[`descricao`.toLowerCase()]
             lancamento.ativo = row[`ativo`.toLowerCase()]
             lancamento.dataInclusao = row[`dataInclusao`.toLowerCase()]
-            lancamento.valorTotal = row[`valorTotal`.toLowerCase()]
+            lancamento.valorTotal = parseFloat(row[`valorTotal`.toLowerCase()])
             lancamento.parcelaTotal = row[`parcelaTotal`.toLowerCase()]
             lancamento.idCategoria = row[`idCategoria`.toLowerCase()]
             lancamento.dataLancamento = row[`dataLancamento`.toLowerCase()]

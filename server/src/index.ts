@@ -2,6 +2,7 @@ import bodyParser from 'body-parser'
 import express, {Request, Response, Application, Router} from 'express'
 import logger from './controller/logger'
 import { getMonthList } from './controller/ParcelaController'
+import { readAllCategorias, readCategorias } from './dao/CategoriaDAO'
 import { readLancamentos, readLancamentosByConta } from './dao/LancamentoDAO'
 import { readParcelaMinDate, readParcelasByMonth } from './dao/ParcelaDAO'
 import Lancamento from './model/Lancamento'
@@ -26,6 +27,11 @@ app.post('/month-list', async (req:Request, res:Response):Promise<void> => {
         const montList:Array<MonthType> = await getMonthList(req.body.idConta) 
         res.send(montList)
     }
+})
+
+app.get('/categoria/all', async (req:Request, res:Response) => {
+    const categorias = await readAllCategorias()
+    res.send(categorias)
 })
 
 app.post('/parcela/by-month', async (req:Request, res:Response):Promise<void> => {

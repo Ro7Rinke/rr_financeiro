@@ -60,6 +60,31 @@ const readCategorias = async (idsCategoria:Array<number>):Promise<Categoria[]> =
     return categorias
 }
 
+const readAllCategorias = async ():Promise<Categoria[]> => {
+
+    let sql = `select id, nome, descricao, ativo from Categoria`
+    let params: any[] | undefined = []
+
+    const result = await pool.query(sql, params)
+
+    let categorias:Array<Categoria> = []
+
+    if(result.rows){
+        for(const row of result.rows){
+            let categoria = new Categoria()
+
+            categoria.id = row[`id`.toLowerCase()]
+            categoria.nome = row[`nome`.toLowerCase()]
+            categoria.descricao = row[`descricao`.toLowerCase()]
+            categoria.ativo = row[`ativo`.toLowerCase()]
+
+            categorias.push(categoria)
+        }
+    }
+
+    return categorias
+}
+
 const deleteCategorias = async (idsCategoria:number[]) => {
     let template = ''
     for(let index = 1; index <= idsCategoria.length; index++){
@@ -81,5 +106,6 @@ export {
     createCategoria,
     updateCategoria,
     readCategorias,
-    deleteCategorias
+    readAllCategorias,
+    deleteCategorias,
 }

@@ -64,7 +64,7 @@ const readParcelas = async (idsParcela:Array<number>):Promise<Parcela[]> => {
             parcela.idLancamento = row[`idLancamento`.toLowerCase()]
             parcela.dataParcela = row[`dataParcela`.toLowerCase()]
             parcela.parcelaAtual = row[`parcelaAtual`.toLowerCase()]
-            parcela.valorParcela = row[`valorParcela`.toLowerCase()]
+            parcela.valorParcela = parseFloat(row[`valorParcela`.toLowerCase()])
             parcela.dataInclusao = row[`dataInclusao`.toLowerCase()]
             parcela.ativo = row[`ativo`.toLowerCase()]
 
@@ -93,7 +93,7 @@ const readParcelasByConta = async (idConta:number):Promise<Parcela[]> => {
             parcela.idLancamento = row[`idLancamento`.toLowerCase()]
             parcela.dataParcela = row[`dataParcela`.toLowerCase()]
             parcela.parcelaAtual = row[`parcelaAtual`.toLowerCase()]
-            parcela.valorParcela = row[`valorParcela`.toLowerCase()]
+            parcela.valorParcela = parseFloat(row[`valorParcela`.toLowerCase()])
             parcela.dataInclusao = row[`dataInclusao`.toLowerCase()]
             parcela.ativo = row[`ativo`.toLowerCase()]
 
@@ -123,19 +123,19 @@ const readParcelasByMonth = async (idConta:number, month:number, year:number):Pr
         for(const row of result.rows){
             let parcela = new Parcela()
 
-            parcela.id = row[`id`.toLowerCase()]
-            parcela.idConta = row[`idConta`.toLowerCase()]
-            parcela.idUsuario = row[`idUsuario`.toLowerCase()]
-            parcela.idLancamento = row[`idLancamento`.toLowerCase()]
+            parcela.id = parseInt(row[`id`.toLowerCase()])
+            parcela.idConta = parseInt(row[`idConta`.toLowerCase()])
+            parcela.idUsuario = parseInt(row[`idUsuario`.toLowerCase()])
+            parcela.idLancamento = parseInt(row[`idLancamento`.toLowerCase()])
             parcela.dataParcela = row[`dataParcela`.toLowerCase()]
-            parcela.parcelaAtual = row[`parcelaAtual`.toLowerCase()]
-            parcela.valorParcela = row[`valorParcela`.toLowerCase()]
+            parcela.parcelaAtual = parseInt(row[`parcelaAtual`.toLowerCase()])
+            parcela.valorParcela = parseFloat(row[`valorParcela`.toLowerCase()])
             parcela.dataInclusao = row[`dataInclusao`.toLowerCase()]
             parcela.ativo = row[`ativo`.toLowerCase()]
             parcela.dataLancamento = row[`dataLancamento`.toLowerCase()]
-            parcela.idCategoria = row[`idCategoria`.toLowerCase()]
+            parcela.idCategoria = parseInt(row[`idCategoria`.toLowerCase()])
             parcela.nome = row[`nome`.toLowerCase()]
-            parcela.parcelaTotal = row[`parcelaTotal`.toLowerCase()]
+            parcela.parcelaTotal = parseInt(row[`parcelaTotal`.toLowerCase()])
 
             parcelas.push(parcela)
         }
@@ -162,7 +162,7 @@ const readParcelasByLancamento = async (idLancamento:number):Promise<Parcela[]> 
             parcela.idLancamento = row[`idLancamento`.toLowerCase()]
             parcela.dataParcela = row[`dataParcela`.toLowerCase()]
             parcela.parcelaAtual = row[`parcelaAtual`.toLowerCase()]
-            parcela.valorParcela = row[`valorParcela`.toLowerCase()]
+            parcela.valorParcela = parseFloat(row[`valorParcela`.toLowerCase()])
             parcela.dataInclusao = row[`dataInclusao`.toLowerCase()]
             parcela.ativo = row[`ativo`.toLowerCase()]
 

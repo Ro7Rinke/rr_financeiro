@@ -4,12 +4,13 @@ import {configureStore} from '@reduxjs/toolkit'
 import targetValue from './reducers/targetValueReducer'
 import installments from './reducers/installmentsReducer'
 import monthList from './reducers/monthListReducer'
+import categories from './reducers/categoriesReducer'
 
 const rootReducer = combineReducers({
     targetValue,
     installments,
-    monthList
-    ,
+    monthList,
+    categories,
 })
 
 const store = configureStore({

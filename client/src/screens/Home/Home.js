@@ -8,7 +8,7 @@ import MonthHeader from '../../components/MonthHeader/MonthHeader'
 
 // import Icon from 'react-native-vector-icons/FontAwesome'
 
-import { colors, getReferenceDate } from '../../common'
+import { colors, getReferenceDate, toArray } from '../../common'
 
 import { useNavigation } from '@react-navigation/native'
 
@@ -17,10 +17,11 @@ import store from '../../redux/store'
 
 import moment from 'moment'
 import 'moment/locale/pt'
+
 import { setMonthList } from '../../redux/actions/monthListAction'
 import { reloadMonthList } from '../../controller/HomeController'
-import { retrieveInstallmentsByMonth } from '../../api/installmentAPI'
 import { reloadInstallments } from '../../controller/InstallmentController.js'
+import { reloadCategories } from '../../controller/CategoryController'
 
 const windowWidth = Dimensions.get('window').width
 const windowHeight = Dimensions.get('window').height
@@ -31,16 +32,47 @@ const Home = (props) => {
     const [referenceDate, setReferenceDate] = useState(new Date())
 
     const [totalCategories, setTotalCategories] = useState([
-        {id:1, categoryName: 'Mercado', value: 1327.12},
-        {id:2, categoryName: 'Alimentação', value: 2171.02},
-        {id:3, categoryName: 'Farmácia', value: 45.00},
-        {id:4, categoryName: 'Combustível', value: 546.34},
-        {id:5, categoryName: 'Outros', value: 54.12},
+        // {id:1, categoryName: 'Mercado', value: 1327.12},
+        // {id:2, categoryName: 'Alimentação', value: 2171.02},
+        // {id:3, categoryName: 'Farmácia', value: 45.00},
+        // {id:4, categoryName: 'Combustível', value: 546.34},
+        // {id:5, categoryName: 'Outros', value: 54.12},
     ])
 
-    const [totalValue, setTotalValue] = useState(2000)
+    const [totalValue, setTotalValue] = useState(0)
 
     const ref = useRef(null)
+
+    const calculateTotal = () => {
+        let newTotalCategoriesObject = {}
+        let newTotalValue = 0
+
+        for(const category of props.categories){
+            let newTotalCategory = {
+                id: category.id,
+                categoryName: category.name,
+                value: 0
+            }
+            newTotalCategoriesObject[`${newTotalCategory.id}`] = newTotalCategory
+        }
+
+        const referenceDate = getReferenceDate(props.monthList[props.monthList.findIndex(element => element.selected)].date)
+        if(props.installments[referenceDate]){
+            for(const installment of props.installments[referenceDate]){
+                if(newTotalCategoriesObject[`${installment.categoryId}`])
+                    newTotalCategoriesObject[`${installment.categoryId}`].value += installment.valueInstallment
+
+                newTotalValue += installment.valueInstallment
+            }
+        }
+
+        setTotalValue(newTotalValue)
+        setTotalCategories(toArray(newTotalCategoriesObject))
+    }
+
+    useEffect(() => {
+        calculateTotal()
+    }, [props.installments])
 
     const selectMonth = (id) => {
         let newMonthList = []
@@ -53,13 +85,13 @@ const Home = (props) => {
 
     useEffect(() => {
         reloadMonthList()
-
+        reloadCategories()
     }, [])
 
     useEffect(() => {
         const index = props.monthList.findIndex(element => element.selected)
 
-        let date = moment(props.monthList[props.monthList.findIndex(element => element.selected)].date)
+        let date = moment(props.monthList[index].date)
 
         reloadInstallments(1, date.month()+1, date.year())
 
@@ -161,6 +193,7 @@ const mapStateToProps = (state) => {
         targetValue: state.targetValue,
         installments: state.installments,
         monthList: state.monthList,
+        categories: state.categories,
     }
 }
 
