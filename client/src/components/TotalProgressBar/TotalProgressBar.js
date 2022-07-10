@@ -52,9 +52,9 @@ const TotalProgressBar = (props) => {
                                 R$ {formatMoney((fill * props.totalValue / fillPercentage), 2, ',', '.')}
                             </Text>
                             <View style={styles.slash}/>
-                            <Text style={styles.textTargetValue}>
+                            {props.targetValue > 0 ? <Text style={styles.textTargetValue}>
                                 R$ {formatMoney(props.targetValue, 2, ',', '.')}
-                            </Text>
+                            </Text> : null}
                         </View>
                     )
                 }
