@@ -1,10 +1,10 @@
 import axios from 'axios'
 
 
-export const retrieveMonthList = async (idConta) => {
+export const retrieveMonthList = async (idAccount) => {
     try{
         const response = await axios.post('/month-list', {
-            idConta
+            idConta: idAccount
         })
 
         return response.data

@@ -10,6 +10,13 @@ class Parcela{
     dataParcela:Date
     idLancamento:number
 
+    //dados do lançamento
+    dataLancamento:Date
+    idCategoria:number
+    nome:string
+    parcelaTotal:number
+
+
     constructor(){
         this.id = 0
         this.idConta = 0
@@ -20,6 +27,12 @@ class Parcela{
         this.parcelaAtual = 0
         this.dataParcela = new Date()
         this.idLancamento = 0
+
+        //dados do lançamento
+        this.dataLancamento = new Date()
+        this.idCategoria = 0
+        this.nome = ''
+        this.parcelaTotal = 0
     }
 }
 

@@ -104,9 +104,16 @@ const readParcelasByConta = async (idConta:number):Promise<Parcela[]> => {
     return parcelas
 }
 
-const readParcelasByMonth = async (idConta:number, month:number):Promise<Parcela[]> => {
-    let sql = `select id, idConta, idUsuario, idLancamento, dataParcela, parcelaAtual, valorParcela, dataInclusao, ativo from Parcela where idConta = $1 and EXTRACT(MONTH from dataParcela) = $2`
-    let params = [idConta, month]
+const readParcelasByMonth = async (idConta:number, month:number, year:number):Promise<Parcela[]> => {
+    let sql = `select 
+    p.id, p.idConta, p.idUsuario, p.idLancamento, p.dataParcela, p.parcelaAtual, p.valorParcela, p.dataInclusao, p.ativo, 
+    l.dataLancamento, l.idCategoria, l.nome, l.parcelaTotal
+    from Parcela p
+    inner join Lancamento l on l.id = p.idLancamento
+    where p.idConta = $1 
+    and EXTRACT(MONTH from p.dataParcela) = $2 
+    and EXTRACT(YEAR from p.dataParcela) = $3`
+    let params = [idConta, month, year]
 
     const result = await pool.query(sql, params)
 
@@ -125,6 +132,10 @@ const readParcelasByMonth = async (idConta:number, month:number):Promise<Parcela
             parcela.valorParcela = row[`valorParcela`.toLowerCase()]
             parcela.dataInclusao = row[`dataInclusao`.toLowerCase()]
             parcela.ativo = row[`ativo`.toLowerCase()]
+            parcela.dataLancamento = row[`dataLancamento`.toLowerCase()]
+            parcela.idCategoria = row[`idCategoria`.toLowerCase()]
+            parcela.nome = row[`nome`.toLowerCase()]
+            parcela.parcelaTotal = row[`parcelaTotal`.toLowerCase()]
 
             parcelas.push(parcela)
         }

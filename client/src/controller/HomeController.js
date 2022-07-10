@@ -1,4 +1,4 @@
-import { retrieveMonthList } from "../api/other"
+import { retrieveMonthList } from "../api/otherAPI"
 import { setMonthList } from "../redux/actions/monthListAction"
 import store from "../redux/store"
 

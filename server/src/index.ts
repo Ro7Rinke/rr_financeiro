@@ -30,7 +30,8 @@ app.post('/month-list', async (req:Request, res:Response):Promise<void> => {
 
 app.post('/parcela/by-month', async (req:Request, res:Response):Promise<void> => {
     if(req.body){
-        res.send(readParcelasByMonth(req.body.idConta, req.body.month))
+        const data = await readParcelasByMonth(req.body.idConta, req.body.month, req.body.year)
+        res.send(data)
     }
 })
 

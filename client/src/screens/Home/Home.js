@@ -19,6 +19,8 @@ import moment from 'moment'
 import 'moment/locale/pt'
 import { setMonthList } from '../../redux/actions/monthListAction'
 import { reloadMonthList } from '../../controller/HomeController'
+import { retrieveInstallmentsByMonth } from '../../api/installmentAPI'
+import { reloadInstallments } from '../../controller/InstallmentController.js'
 
 const windowWidth = Dimensions.get('window').width
 const windowHeight = Dimensions.get('window').height
@@ -51,10 +53,15 @@ const Home = (props) => {
 
     useEffect(() => {
         reloadMonthList()
+
     }, [])
 
     useEffect(() => {
         const index = props.monthList.findIndex(element => element.selected)
+
+        let date = moment(props.monthList[props.monthList.findIndex(element => element.selected)].date)
+
+        reloadInstallments(1, date.month()+1, date.year())
 
         ref.current?.scrollToIndex({
             index,

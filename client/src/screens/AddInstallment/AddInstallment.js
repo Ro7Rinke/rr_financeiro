@@ -51,7 +51,7 @@ const AddInstallment = (props) => {
     }
 
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
             <View style={styles.inputContainer}>
                 <Text style={styles.label}>Nome:</Text>
                 <TextInput
@@ -116,7 +116,7 @@ const AddInstallment = (props) => {
                     <Text style={styles.button}>Adicionar Lançamento</Text>
                 </TouchableOpacity>
             </View>
-        </View>
+        </ScrollView>
     )
 }
 
