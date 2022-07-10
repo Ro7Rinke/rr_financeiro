@@ -2,7 +2,7 @@ import Lancamento from "../model/Lancamento"
 import { pool } from "./Database"
 
 const createLancamento = async (lancamento:Lancamento) => {
-    let sql = `insert into Lancamento(idConta, idUsuario, nome, descricao, ativo, dataInclusao, valorTotal, parcelaTotal, idCategoria, dataLancamento, idLancamentoPeriodico) values($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`
+    let sql = `insert into Lancamento(idConta, idUsuario, nome, descricao, ativo, dataInclusao, valorTotal, parcelaTotal, idCategoria, dataLancamento) values($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING id`
     let params = [
         lancamento.idConta,
         lancamento.idUsuario,
@@ -14,16 +14,15 @@ const createLancamento = async (lancamento:Lancamento) => {
         lancamento.parcelaTotal,
         lancamento.idCategoria,
         lancamento.dataLancamento,
-        lancamento.idLancamentoPeriodico,
     ]
 
     const result = await pool.query(sql, params)
 
-    return result
+    return result.rows[0].id
 }
 
 const updateLancamento = async (lancamento:Lancamento) => {
-    let sql = `update Lancamento idConta = $1, idUsuario = $2, nome = $3, descricao = $4, ativo = $5, dataInclusao = $6, valorTotal = $7, parcelaTotal = $8, idCategoria = $9, dataLancamento = $10, idLancamentoPeriodico = $11 where id = $12`
+    let sql = `update Lancamento idConta = $1, idUsuario = $2, nome = $3, descricao = $4, ativo = $5, dataInclusao = $6, valorTotal = $7, parcelaTotal = $8, idCategoria = $9, dataLancamento = $10 where id = $11`
     let params = [
         lancamento.idConta,
         lancamento.idUsuario,
@@ -35,7 +34,6 @@ const updateLancamento = async (lancamento:Lancamento) => {
         lancamento.parcelaTotal,
         lancamento.idCategoria,
         lancamento.dataLancamento,
-        lancamento.idLancamentoPeriodico,
         lancamento.id
     ]
 
@@ -53,7 +51,7 @@ const readLancamentos = async (idsLancamento:Array<number>):Promise<Lancamento[]
         }
     }
 
-    let sql = `select id, idConta, idUsuario, nome, descricao, ativo, dataInclusao, valorTotal, parcelaTotal, idCategoria, dataLancamento, idLancamentoPeriodico from Lancamento where id in (${template})`
+    let sql = `select id, idConta, idUsuario, nome, descricao, ativo, dataInclusao, valorTotal, parcelaTotal, idCategoria, dataLancamento from Lancamento where id in (${template})`
     let params = idsLancamento
 
     const result = await pool.query(sql, params)
@@ -75,7 +73,6 @@ const readLancamentos = async (idsLancamento:Array<number>):Promise<Lancamento[]
             lancamento.parcelaTotal = row[`parcelaTotal`.toLowerCase()]
             lancamento.idCategoria = row[`idCategoria`.toLowerCase()]
             lancamento.dataLancamento = row[`dataLancamento`.toLowerCase()]
-            lancamento.idLancamentoPeriodico = row[`idLancamentoPeriodico`.toLowerCase()]
 
             lancamentos.push(lancamento)
         }
@@ -85,7 +82,7 @@ const readLancamentos = async (idsLancamento:Array<number>):Promise<Lancamento[]
 }
 
 const readLancamentosByConta = async (idConta:number):Promise<Lancamento[]> => {
-    let sql = `select id, idConta, idUsuario, nome, descricao, ativo, dataInclusao, valorTotal, parcelaTotal, idCategoria, dataLancamento, idLancamentoPeriodico from Lancamento where idConta = $1`
+    let sql = `select id, idConta, idUsuario, nome, descricao, ativo, dataInclusao, valorTotal, parcelaTotal, idCategoria, dataLancamento from Lancamento where idConta = $1`
     let params = [idConta]
 
     const result = await pool.query(sql, params)
@@ -107,7 +104,6 @@ const readLancamentosByConta = async (idConta:number):Promise<Lancamento[]> => {
             lancamento.parcelaTotal = row[`parcelaTotal`.toLowerCase()]
             lancamento.idCategoria = row[`idCategoria`.toLowerCase()]
             lancamento.dataLancamento = row[`dataLancamento`.toLowerCase()]
-            lancamento.idLancamentoPeriodico = row[`idLancamentoPeriodico`.toLowerCase()]
 
             lancamentos.push(lancamento)
         }

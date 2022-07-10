@@ -1,5 +1,6 @@
 import bodyParser from 'body-parser'
 import express, {Request, Response, Application, Router} from 'express'
+import { addLancamento } from './controller/LancamentoController'
 import logger from './controller/logger'
 import { getMonthList } from './controller/ParcelaController'
 import { readAllCategorias, readCategorias } from './dao/CategoriaDAO'
@@ -38,6 +39,17 @@ app.post('/parcela/by-month', async (req:Request, res:Response):Promise<void> =>
     if(req.body){
         const data = await readParcelasByMonth(req.body.idConta, req.body.month, req.body.year)
         res.send(data)
+    }
+})
+
+app.post('/lancamento/add', async (req:Request, res:Response) => {
+    try {
+        if(req.body){
+            await addLancamento(req.body)
+        }
+        res.send('ok')
+    } catch (error) {
+        res.send(error)
     }
 })
 

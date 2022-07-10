@@ -4,7 +4,7 @@ import { generateParcelaByLancamento } from "./ParcelaController";
 
 export const addLancamento = async (lancamento:Lancamento) => {
     
-    await createLancamento(lancamento)
+    lancamento.id = await createLancamento(lancamento)
 
     generateParcelaByLancamento(lancamento)
 }

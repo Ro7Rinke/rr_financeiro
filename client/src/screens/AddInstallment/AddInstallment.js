@@ -1,17 +1,21 @@
 import React, {useState} from 'react'
 import { View, StyleSheet, Text, TouchableOpacity, ScrollView, TextInput } from 'react-native'
+
+import {connect} from 'react-redux'
+
 import {colors} from '../../common'
 import { MaskedTextInput } from "react-native-mask-text"
 import DateTimePicker from '@react-native-community/datetimepicker'
 import {Picker} from '@react-native-picker/picker'
 import { useNavigation, StackActions } from '@react-navigation/native'
+import { addEntry } from '../../controller/EntryController'
 
 const AddInstallment = (props) => {
     const navigation = useNavigation()
 
     const [nameText, setNameText] = useState('')
 
-    const [totalValueText, setTotalValueText] = useState('')
+    const [totalValue, setTotalValue] = useState('')
 
     const [totalInstallmentsText, setTotalInstallmentsText] = useState('1')
 
@@ -19,22 +23,20 @@ const AddInstallment = (props) => {
     const [datePickerOpen, setDatePickerOpen] = useState(false)
 
     const [category, setCategory] = useState(5)
-    const [categories, setCategories] = useState([
-        {name: 'Mercado', id: 1},
-        {name: 'Alimentação', id: 2},
-        {name: 'Farmácia', id: 3},
-        {name: 'Combustível', id: 4},
-        {name: 'Outros', id: 5},
-    ])
 
     const onDateChange = (event, newDate) => {
         setDate(newDate)
         setDatePickerOpen(false)
     }
 
-    const onAddInstallment = () => {
+    const onAddInstallment = async () => {
         if(checkFields()){
-            navigation.dispatch(StackActions.popToTop('Home'))
+            const response = await addEntry(1, nameText, '', parseFloat(totalValue), parseInt(totalInstallmentsText), category, date)
+            if(response){
+                navigation.dispatch(StackActions.popToTop('Home'))
+            }else{
+                alert('Algo deu errado ao cadastrar o lançamento!')
+            }
         }else{
             alert('Por favor preencha todos os campos!')
         }
@@ -70,7 +72,7 @@ const AddInstallment = (props) => {
                     groupSeparator: '.',
                     precision: 2
                 }}
-                onChangeText={(formatted, extracted) => setTotalValueText(extracted)}
+                onChangeText={(formatted, extracted) => setTotalValue(extracted/100)}
                 style={styles.textInput}
                 keyboardType="numeric" />
             </View>
@@ -106,7 +108,7 @@ const AddInstallment = (props) => {
                 <Picker style={[styles.textInput, styles.pickerCategory]}
                     onValueChange={(newCategory => setCategory(newCategory))}
                     selectedValue={category} >
-                    {categories.map(item => 
+                    {props.categories.map(item => 
                         (<Picker.Item style={styles.pickerItem} key={item.id} label={item.name} value={item.id}/>)
                     )}
                 </Picker>
@@ -198,4 +200,10 @@ const styles = StyleSheet.create({
     },
 })
 
-export default AddInstallment
+const mapStateToProps = (state) => {
+    return {
+        categories: state.categories
+    }
+}
+
+export default connect(mapStateToProps)(AddInstallment)

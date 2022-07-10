@@ -91,16 +91,18 @@ const Home = (props) => {
     useEffect(() => {
         const index = props.monthList.findIndex(element => element.selected)
 
-        let date = moment(props.monthList[index].date)
+        if(index >= 0){
+            let date = moment(props.monthList[index].date)
 
-        reloadInstallments(1, date.month()+1, date.year())
+            reloadInstallments(1, date.month()+1, date.year())
 
-        ref.current?.scrollToIndex({
-            index,
-            animemated: true,
-            viewPosition: 0.5,
-            viewOffset: index == 0 ? windowWidth/3 : -windowWidth/3
-        })
+            ref.current?.scrollToIndex({
+                index,
+                animemated: true,
+                viewPosition: 0.5,
+                viewOffset: index == 0 ? windowWidth/3 : -windowWidth/3
+            })
+        }
     }, [props.monthList])
 
     return props.monthList.length > 0 ? (

@@ -13,7 +13,7 @@ class Lancamento {
     parcelaTotal:number
     idCategoria:number
     dataLancamento:Date
-    idLancamentoPeriodico:number
+    idLancamentoPeriodico?:number
     parcelas:Array<Parcela>
     tags:Array<Tag>
 
@@ -29,7 +29,6 @@ class Lancamento {
         this.parcelaTotal = 0
         this.idCategoria = 0
         this.dataLancamento = new Date()
-        this.idLancamentoPeriodico = 0
         this.parcelas = []
         this.tags = []
     }

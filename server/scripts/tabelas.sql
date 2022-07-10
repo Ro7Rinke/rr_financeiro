@@ -59,11 +59,11 @@ create table if not exists Lancamento (
 	parcelaTotal integer not null,
 	idCategoria integer not null,
 	dataLancamento date not null,
-	idLancamentoPeriodico integer null,
+--	idLancamentoPeriodico integer null,
 	constraint fk_idConta foreign key(idConta) references Conta(id),
 	constraint fk_idUsuario foreign key(idUsuario) references Usuario(id),
-	constraint fk_idCategoria foreign key(idCategoria) references Categoria(id),
-	constraint fk_idLancamentoPeriodico foreign key(idLancamentoPeriodico) references LancamentoPeriodico(id)
+	constraint fk_idCategoria foreign key(idCategoria) references Categoria(id)
+--	,constraint fk_idLancamentoPeriodico foreign key(idLancamentoPeriodico) references LancamentoPeriodico(id)
 );
 
 create table if not exists Parcela (
