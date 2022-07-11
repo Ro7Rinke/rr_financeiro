@@ -15,10 +15,19 @@ export const sendNewEntry = async (entry) => {
             dataLancamento: entry.entryDate,
         })
 
-        if(response.data && response.data == 'ok')
-            return true        
-        else
-            return false
+        return response.data && response.data == 'ok'
+    } catch (error) {
+        throw error
+    }
+}
+
+export const deleteEntries = async (idsEntry) => {
+    try {
+        const response = await axios.post('/lancamento/remove', {
+            idsLancamento: idsEntry
+        })        
+
+        return response.data && response.data == 'ok'
     } catch (error) {
         throw error
     }

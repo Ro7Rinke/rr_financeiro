@@ -5,6 +5,7 @@ import { colors, formatMoney } from '../../common'
 import store from '../../redux/store'
 import * as installmentsAction from '../../redux/actions/installmentsAction' 
 import moment, { isMoment } from 'moment'
+import { removeEntries } from '../../controller/EntryController'
 
 const Installment = (props) => {
     const entryDate = isMoment(props.installment.entryDate) ? props.installment.entryDate : moment(props.installment.entryDate)
@@ -18,9 +19,13 @@ const Installment = (props) => {
 
     const [showDeleteModal, setShowDeleteModal] = useState(false)
 
-    const deleteInstallment = () => {
+    const deleteInstallment = async () => {
 
-        store.dispatch(installmentsAction.removeInstallment(props.installment))
+        // store.dispatch(installmentsAction.removeInstallment(props.installment))
+
+        if(!await removeEntries(props.installment.idEntry)){
+            alert('Não foi possível deletar o lançamento!')
+        }
 
         setShowDeleteModal(!showDeleteModal)
     }

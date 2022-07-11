@@ -23,6 +23,9 @@ const initialState = {
 
 const installments = (state = initialState, action) => {
     switch(action.type){
+        case types.setInstallmentsByMonth:
+            return setInstallmentsByMonth(state, action)
+
         case types.addInstallments:
             return addInstallments(state, action)
 
@@ -35,6 +38,14 @@ const installments = (state = initialState, action) => {
         default:
             return state
     }
+}
+
+const setInstallmentsByMonth = (state, action) => {
+    let newState = {...state}
+
+    newState[`${action.data.referenceDate}`] = action.data.installments
+
+    return newState
 }
 
 const addInstallments = (state, action) => {

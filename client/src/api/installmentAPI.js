@@ -20,7 +20,8 @@ export const retrieveInstallmentsByMonth = async (idAccount, month, year) => {
                     entryDate: installment.dataLancamento,
                     valueInstallment: installment.valorParcela,
                     currentInstallment: installment.parcelaAtual,
-                    totalInstallment: installment.parcelaTotal
+                    totalInstallment: installment.parcelaTotal,
+                    idEntry: installment.idLancamento,
                 })
             }
         }

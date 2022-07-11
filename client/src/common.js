@@ -56,3 +56,12 @@ export const getReferenceDate = (inputDate) => {
 
     return `${monthText}/${yearText}`
 }
+
+export const getReferenceDateByMonthYear = (month, year) => {
+    const date = moment().day(1).month(month-1).year(year)
+
+    const monthText = date.format('MM')
+    const yearText = date.format('YYYY')
+
+    return `${monthText}/${yearText}`
+}
