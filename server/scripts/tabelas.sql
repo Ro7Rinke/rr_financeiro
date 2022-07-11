@@ -119,7 +119,11 @@ create table if not exists LancamentoTag (
 	constraint fk_idLancamento foreign key(idLancamento) references Lancamento(id)
 );
 
-
+insert into categoria (nome, descricao, ativo) values ('Mercado', null, true);
+insert into categoria (nome, descricao, ativo) values ('Alimentação', null, true);
+insert into categoria (nome, descricao, ativo) values ('Farmácia', null, true);
+insert into categoria (nome, descricao, ativo) values ('Combustível', null, true);
+insert into categoria (nome, descricao, ativo) values ('Outros', null, true);
 
 
 
