@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "ts-node ./src/index.ts",
-    "dev": "nodemon ./src/index.ts --debug"
+    "dev": "nodemon ./src/index.ts --debug",
+    "localtunnel" : "lt --port 8001 --subdomain ro7rinke2"
   },
   "author": "",
   "license": "ISC",
