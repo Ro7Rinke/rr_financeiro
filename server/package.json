@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "ts-node ./src/index.ts",
     "dev": "nodemon ./src/index.ts --debug",
-    "localtunnel" : "lt --port 8001 --subdomain ro7rinke2"
+    "localtunnel" : "lt --port 8002 --subdomain ro7rinke",
+    "localtunnel-dev" : "lt --port 8001 --subdomain ro7rinke2"
   },
   "author": "",
   "license": "ISC",

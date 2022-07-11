@@ -1,5 +1,6 @@
 import bodyParser from 'body-parser'
 import express, {Request, Response, Application, Router} from 'express'
+import { isDebug } from './controller/args'
 import { addLancamento, removeLancamentos } from './controller/LancamentoController'
 import logger from './controller/logger'
 import { getMonthList } from './controller/ParcelaController'
@@ -13,7 +14,7 @@ import MonthType from './type/MonthType'
 const app:Application = express()
 const router:Router = express.Router()
 
-const PORT = 8001 //process.env.PORT || 8001
+const PORT = isDebug() ? 8001 : 8002 //process.env.PORT || 8001
 
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
