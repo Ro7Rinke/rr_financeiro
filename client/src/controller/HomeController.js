@@ -3,9 +3,9 @@ import { setMonthList } from "../redux/actions/monthListAction"
 import store from "../redux/store"
 
 export const reloadMonthList = async () => {
-    const idConta = 1//colocar o idConta do redux
+    const {idAccount} = store.getState()
 
-    const monthList = await retrieveMonthList(idConta)
+    const monthList = await retrieveMonthList(idAccount)
 
     store.dispatch(setMonthList(monthList))
 }

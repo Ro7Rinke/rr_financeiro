@@ -16,8 +16,9 @@ export const addEntry = async (
     entryDate
 ) => {
     try {
+        const {idAccount} = store.getState()
         const entry = {
-            idAccount: 1,
+            idAccount,
             idUser,
             name,
             description,
