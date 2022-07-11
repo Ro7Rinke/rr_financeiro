@@ -35,7 +35,7 @@ export const colors = {
     }
 }
 
-export const baseURL = 'http://192.168.200.107:8001'
+export const baseURL = 'https://ro7rinke2.loca.lt'//'http://192.168.200.107:8001'
 
 export const toArray = (object = {}) => {
     let array = []
