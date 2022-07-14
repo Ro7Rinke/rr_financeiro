@@ -7,14 +7,15 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "ts-node ./src/index.ts",
     "dev": "nodemon ./src/index.ts --debug",
-    "localtunnel" : "lt --port 8002 --subdomain ro7rinke",
-    "localtunnel-dev" : "lt --port 8001 --subdomain ro7rinke2"
+    "localtunnel": "lt --port 8002 --subdomain ro7rinke",
+    "localtunnel-dev": "lt --port 8001 --subdomain ro7rinke2"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.1",
     "currency.js": "^2.0.4",
+    "dotenv": "^16.0.1",
     "express": "^4.17.2",
     "moment": "^2.29.3",
     "pg": "^8.7.3",
