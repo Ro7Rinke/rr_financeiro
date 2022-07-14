@@ -37,8 +37,8 @@ const readContas = async (idsConta:Array<number>):Promise<Conta[]> => {
         }
     }
 
-    let sql = `select id, senha, email, nome from Conta where id in (${template})`
-    let params = idsConta
+    let sql = `select id, senha, email, nome from Conta where id in ($1)`
+    let params = [template]
 
     const result = await pool.query(sql, params)
 
@@ -58,6 +58,27 @@ const readContas = async (idsConta:Array<number>):Promise<Conta[]> => {
     }
 
     return contas
+}
+
+const readContaByEmail = async (email:string):Promise<Conta | null> => {
+
+    let sql = `select id, senha, email, nome from Conta where email like $1`
+    let params = [email]
+
+    const result = await pool.query(sql, params)
+
+    if(result.rows && result.rows[0]){
+        let conta = new Conta()
+
+        conta.id = result.rows[0][`id`.toLowerCase()]
+        conta.senha = result.rows[0][`senha`.toLowerCase()]
+        conta.email = result.rows[0][`email`.toLowerCase()]
+        conta.nome = result.rows[0][`nome`.toLowerCase()]
+
+        return conta
+    }
+
+    return null
 }
 
 const deleteContas = async (idsConta:number[]) => {
@@ -81,5 +102,6 @@ export {
     createConta,
     updateConta,
     readContas,
-    deleteContas
+    readContaByEmail,
+    deleteContas,
 }
