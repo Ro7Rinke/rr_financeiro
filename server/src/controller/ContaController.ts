@@ -1,5 +1,6 @@
 import { createConta, readContaByEmail } from "../dao/ContaDAO";
 import Conta from "../model/Conta";
+import bcrypt from 'bcrypt'
 
 export const signup = async (conta:Conta) => {
     try {
@@ -16,9 +17,10 @@ export const signup = async (conta:Conta) => {
 }
 
 export const login = async (email:string, senha:string) => {
-    const conta = await readContaByEmail(email)
+    let conta = await readContaByEmail(email)
 
-    if(conta && conta.senha === senha){
+    if(conta && bcrypt.compareSync(senha, conta.senha)){
+        conta.senha = ''
         return conta
     }
 

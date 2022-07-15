@@ -1,6 +1,6 @@
 import { types } from "../actions/idAccountAction"
 
-const initialState = 1
+const initialState = 0
 
 const idAccount = (state = initialState, action) => {
     switch (action.type){

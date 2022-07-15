@@ -32,9 +32,9 @@ export const addEntry = async (
 
         if(await sendNewEntry(entry)){
             let date = moment(entry.entryDate)
-
+            
             for(let i = 0; i < entry.totalInstallment; i++){
-                reloadInstallments(1, date.month()+1, date.year())
+                reloadInstallments(idAccount, date.month()+1, date.year())
                 date.add(1, 'month')
             }
     
@@ -54,18 +54,17 @@ export const removeEntries = async (idsEntry) => {
     try {
         if(await deleteEntries(Array.isArray(idsEntry) ? idsEntry : [idsEntry])){
 
-            const {monthList} = store.getState()
+            const {monthList, idAccount} = store.getState()
 
             let date = monthList[monthList.findIndex(element => element.selected)].date
             if(!isMoment(date))
                 date = moment(date)
 
-            reloadInstallments(1, date.month()+1, date.year())
+            reloadInstallments(idAccount, date.month()+1, date.year())
 
             reloadMonthList()
             return true
         }else{
-            console.log('false')
             return false
         }
     } catch (error) {

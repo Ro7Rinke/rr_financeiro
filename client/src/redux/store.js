@@ -6,6 +6,7 @@ import installments from './reducers/installmentsReducer'
 import monthList from './reducers/monthListReducer'
 import categories from './reducers/categoriesReducer'
 import idAccount from './reducers/idAccountReducer'
+import account from './reducers/accountReducer'
 
 const rootReducer = combineReducers({
     targetValue,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
     monthList,
     categories,
     idAccount,
+    account,
 })
 
 const store = configureStore({

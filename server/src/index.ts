@@ -5,12 +5,10 @@ import { login, signup } from './controller/ContaController'
 import { addLancamento, removeLancamentos } from './controller/LancamentoController'
 import logger from './controller/logger'
 import { getMonthList } from './controller/ParcelaController'
-import { readAllCategorias, readCategorias } from './dao/CategoriaDAO'
-import { readLancamentos, readLancamentosByConta } from './dao/LancamentoDAO'
-import { readParcelaMinDate, readParcelasByMonth } from './dao/ParcelaDAO'
-import Lancamento from './model/Lancamento'
-import Parcela from './model/Parcela'
+import { readAllCategorias } from './dao/CategoriaDAO'
+import { readParcelasByMonth } from './dao/ParcelaDAO'
 import MonthType from './type/MonthType'
+import bcrypt from 'bcrypt'
 
 const app:Application = express()
 const router:Router = express.Router()
@@ -35,7 +33,8 @@ app.post('/month-list', async (req:Request, res:Response):Promise<void> => {
 app.post('/conta/signup', async (req:Request, res:Response) => {
     try{
         if(req.body && req.body.email && req.body.senha && req.body.nome){
-            if(await signup({email: req.body.email, senha: req.body.senha, nome: req.body.nome,id: 0})){
+            const senhaHash = bcrypt.hashSync(req.body.senha, 10)
+            if(await signup({email: req.body.email, senha: senhaHash, nome: req.body.nome,id: 0})){
                 res.send('ok')
             }else{
                 res.status(500).send('error')
@@ -99,29 +98,3 @@ app.post('/lancamento/remove', async (req:Request, res:Response) => {
 app.listen(PORT, ():void => {
     logger.info(`Server Running on PORT:${PORT}`)
 })
-
-let parcela:Parcela = new Parcela()
-
-parcela.idConta = 1
-parcela.idUsuario = 1
-parcela.idLancamento = 1
-parcela.valorParcela = 200
-
-
-
-const run = async () => {
-    // let lancamentos:Array<Lancamento> = await readLancamentosByConta(1)
-
-    // if(lancamentos.length > 0){
-    //     generateParcelaByLancamento(lancamentos[0])
-    // }else{
-    //     console.log('deu ruim')
-    // }
-
-    // let data:Date = await readParcelaMinDate(1)
-
-    console.log(await getMonthList(1))
-
-}
-
-// run()

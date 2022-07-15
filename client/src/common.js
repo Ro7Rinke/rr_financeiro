@@ -32,7 +32,8 @@ export const colors = {
         '3': '#ede213',
         '4': '#00bf00',
         '5': '#0000ff',
-    }
+    },
+    linkText: '#0645AD',
 }
 
 export const baseURLDev = 'https://ro7rinke2.loca.lt'//'http://192.168.200.107:8001'

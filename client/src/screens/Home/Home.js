@@ -94,7 +94,7 @@ const Home = (props) => {
         if(index >= 0){
             let date = moment(props.monthList[index].date)
 
-            reloadInstallments(1, date.month()+1, date.year())
+            reloadInstallments(props.idAccount, date.month()+1, date.year())
 
             ref.current?.scrollToIndex({
                 index,
@@ -197,6 +197,7 @@ const mapStateToProps = (state) => {
         installments: state.installments,
         monthList: state.monthList,
         categories: state.categories,
+        idAccount: state.idAccount,
     }
 }
 

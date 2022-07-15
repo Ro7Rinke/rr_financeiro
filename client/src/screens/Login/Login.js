@@ -3,6 +3,7 @@ import React, {useEffect, useRef, useState} from 'react'
 import { Dimensions, View, StyleSheet, Text, TouchableOpacity, TextInput } from 'react-native'
 import { connect } from 'react-redux'
 import { colors } from '../../common'
+import { loginByEmail, signup } from '../../controller/AccountController'
 
 const windowWidth = Dimensions.get('window').width
 const windowHeight = Dimensions.get('window').height
@@ -13,13 +14,35 @@ const Login = (props) => {
 
     const [emailText, setEmailText] = useState('')
     const [passwordText, setPasswordText] = useState('')
+    const [nameText, setNameText] = useState('')
+    const [isLogin, setIsLogin] = useState(true)
     
     const onLogin = async () => {
-        navigation.dispatch(StackActions.replace('Home'))
+        if(await loginByEmail(emailText, passwordText))
+            navigation.dispatch(StackActions.replace('Home'))
+            else
+                alert('Um erro aconteceu!')
+    }
+
+    const onSignup = async () => {
+
+        if(await signup(emailText, passwordText, nameText)){
+            onLogin()
+        }else{
+            alert('Ocorreu um erro!')
+        }
     }
 
     return (
         <View style={styles.container}>
+            {!isLogin ?
+                <View style={styles.containerInput}>
+                    <Text style={styles.text}>Nome:</Text>
+                    <TextInput style={styles.input} 
+                        value={nameText}
+                        onChangeText={(text) => setNameText(text)} />
+                </View> 
+            : null}
             <View style={styles.containerInput}>
                 <Text style={styles.text}>Email:</Text>
                 <TextInput style={styles.input} 
@@ -35,8 +58,12 @@ const Login = (props) => {
                     secureTextEntry={true}
                     selectTextOnFocus={true}/>
             </View>
-            <TouchableOpacity onPress={onLogin} >
-                <Text style={styles.button}>Login</Text>
+            <TouchableOpacity onPress={isLogin ? onLogin : onSignup} >
+                <Text style={styles.button}>{isLogin ? 'Login' : 'Cadastrar'}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.linkContainer} onPress={() => setIsLogin(!isLogin)}>
+                <Text >{isLogin ? 'Não possui uma conta? ' : 'Já é cadastrado? '}</Text>
+                <Text style={styles.linkText}>{isLogin ? 'Cadastrar-se.' : 'Fazer Login.'}</Text>
             </TouchableOpacity>
         </View>
     )
@@ -84,6 +111,12 @@ const styles = StyleSheet.create({
         fontSize: 22,
         fontWeight: '500',
     },
+    linkContainer: {
+        flexDirection: 'row',
+    },  
+    linkText: {
+        color: colors.linkText, 
+    }
 })
 
 const mapStateToProps = (state) => {
