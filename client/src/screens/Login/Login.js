@@ -1,9 +1,9 @@
 import { useNavigation, StackActions } from '@react-navigation/native'
-import React, {useEffect, useRef, useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import { Dimensions, View, StyleSheet, Text, TouchableOpacity, TextInput } from 'react-native'
 import { connect } from 'react-redux'
 import { colors } from '../../common'
-import { loginByEmail, signup } from '../../controller/AccountController'
+import { loginByEmail, loginByJwt, signup } from '../../controller/AccountController'
 
 const windowWidth = Dimensions.get('window').width
 const windowHeight = Dimensions.get('window').height
@@ -16,6 +16,7 @@ const Login = (props) => {
     const [passwordText, setPasswordText] = useState('')
     const [nameText, setNameText] = useState('')
     const [isLogin, setIsLogin] = useState(true)
+    const [isLoading, setIsLoading] = useState(true)
     
     const onLogin = async () => {
         if(await loginByEmail(emailText, passwordText))
@@ -33,7 +34,23 @@ const Login = (props) => {
         }
     }
 
-    return (
+    const checkLogin = async () => {
+        try {
+            if(await loginByJwt()){
+                navigation.dispatch(StackActions.replace('Home'))
+            }else{
+                setIsLoading(false)
+            }
+        } catch (error) {
+            setIsLoading(false)
+        }
+    }
+
+    useEffect(() => {
+        checkLogin()
+    },[])
+
+    return isLoading ? null : (
         <View style={styles.container}>
             {!isLogin ?
                 <View style={styles.containerInput}>

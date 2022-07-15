@@ -1,17 +1,22 @@
-import { retrieveAccount, sendNewAccount } from "../api/accountAPI"
+import { retrieveAccountByEmail, retrieveAccountByJwt, sendNewAccount } from "../api/accountAPI"
 import { setAccount } from "../redux/actions/accountAction"
 import { setIdAccount } from "../redux/actions/idAccountAction"
 import store from "../redux/store"
+import AsyncStorage from '@react-native-async-storage/async-storage'
+
+const login = (account) => {
+    store.dispatch(setIdAccount(account.id))
+    store.dispatch(setAccount(account))
+
+    AsyncStorage.setItem('jwt', account.jwt)
+}
 
 export const loginByEmail = async (email, password) => {
     try {
-        const account = await retrieveAccount(email, password)
+        const account = await retrieveAccountByEmail(email, password)
         
         if(account){
-            store.dispatch(setIdAccount(account.id))
-            store.dispatch(setAccount(account))
-
-            console.log(account.jwt)
+            login(account)
 
             return true
         }
@@ -19,6 +24,27 @@ export const loginByEmail = async (email, password) => {
         return false
     } catch (error) {
         return false
+    }
+}
+
+export const loginByJwt = async () => {
+    try{
+        const jwt = await AsyncStorage.getItem('jwt')
+
+        if(!jwt)
+            return false
+
+        const account = await retrieveAccountByJwt(jwt)
+
+        if(account){
+            login(account)
+
+            return true
+        }else{
+            return false
+        }
+    }catch(error){
+        throw error
     }
 }
 
