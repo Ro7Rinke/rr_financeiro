@@ -5,6 +5,8 @@ create table if not exists Conta (
 	nome varchar(40) not null
 );
 
+alter table conta add constraint email_unique unique(email);
+
 create table if not exists Usuario (
 	id serial primary key not null,
 	idConta integer not null,

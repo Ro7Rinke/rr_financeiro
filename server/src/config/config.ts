@@ -17,3 +17,5 @@ export const credentials:Credential = JSON.parse(
         : process.env.DATABASE_CREDENTIALS)
     || ''
 )
+
+export const jwtExpiration = '7d'

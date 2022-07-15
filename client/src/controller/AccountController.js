@@ -11,6 +11,8 @@ export const loginByEmail = async (email, password) => {
             store.dispatch(setIdAccount(account.id))
             store.dispatch(setAccount(account))
 
+            console.log(account.jwt)
+
             return true
         }
 

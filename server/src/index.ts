@@ -1,7 +1,7 @@
 import bodyParser from 'body-parser'
 import express, {Request, Response, Application, Router} from 'express'
 import { isDebug } from './controller/args'
-import { login, signup } from './controller/ContaController'
+import { login, loginByJwt, signup } from './controller/ContaController'
 import { addLancamento, removeLancamentos } from './controller/LancamentoController'
 import logger from './controller/logger'
 import { getMonthList } from './controller/ParcelaController'
@@ -57,6 +57,22 @@ app.post('/conta/login', async (req:Request, res:Response) => {
         }
     }catch(error){
         res.send(error)
+    }
+})
+
+app.post('/conta/login-jwt', async (req:Request, res:Response) => {
+    try {
+        if(req.body && req.body.jwt){
+            const conta = await loginByJwt(req.body.jwt)
+
+            if(conta){
+                res.send(conta)
+            }else{
+                res.status(500).send('error')
+            }
+        }
+    } catch (error) {
+        res.status(500).send(error)
     }
 })
 

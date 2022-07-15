@@ -37,8 +37,10 @@ const readContas = async (idsConta:Array<number>):Promise<Conta[]> => {
         }
     }
 
-    let sql = `select id, senha, email, nome from Conta where id in ($1)`
-    let params = [template]
+    console.log(template)
+
+    let sql = `select id, senha, email, nome from Conta where id in (${template})`
+    let params = idsConta
 
     const result = await pool.query(sql, params)
 

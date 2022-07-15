@@ -12,7 +12,8 @@ export const retrieveAccount = async (email, password) => {
                 id: response.data.id,
                 email: response.data.email,
                 // password: response.data.senha,
-                name: response.data.nome
+                name: response.data.nome,
+                jwt: response.data.jwt,
             }
         }
 
