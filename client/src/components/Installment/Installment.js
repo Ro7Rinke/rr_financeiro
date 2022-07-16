@@ -121,6 +121,7 @@ const styles = StyleSheet.create({
     },
     textBig: {
         fontSize: 18,
+        color: '#000',
     },
     textSmall: {
         fontSize: 15,
@@ -178,6 +179,7 @@ const styles = StyleSheet.create({
         marginBottom: 15,
         textAlign: "center",
         fontSize: 18,
+        color: colors.label,
     }
 })
 

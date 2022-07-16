@@ -32,6 +32,7 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 15,
         borderColor: colors.primaryColorSolid,
+        color: colors.label,
     },
     selected: {
         color: colors.primaryColorSolid,
