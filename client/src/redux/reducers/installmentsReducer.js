@@ -46,7 +46,7 @@ const installments = (state = initialState, action) => {
 const setInstallmentsByMonth = (state, action) => {
     let newState = {...state}
 
-    newState[`${action.data.referenceDate}`] = action.data.installments
+    newState[`${action.data.referenceDate}`] = action.data.installments.sort((a, b) => a.entryDate > b.entryDate)
 
     return newState
 }
@@ -71,7 +71,7 @@ const addInstallment = (state, action) => {
     else
         newState = removeInstallment(state, action)
 
-    newState[referenceDate] = [...newState[referenceDate], action.data]
+    newState[referenceDate] = [...newState[referenceDate], action.data].sort((a, b) => a.entryDate > b.entryDate)
 
     return newState
 }
