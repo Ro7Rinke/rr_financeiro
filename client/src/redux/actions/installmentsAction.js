@@ -3,6 +3,7 @@ export const types = {
     addInstallments: 'ADD_INSTALLMENTS',
     addInstallment: 'ADD_INSTALLMENT',
     removeInstallment: 'REMOVE_INSTALLMENT',
+    removeInstallmentsById: 'REMOVE_INSTALLMENTS_BY_ID',
 }
 
 export const setInstallmentsByMonth = data => ({
@@ -23,4 +24,9 @@ export const addInstallment = data => ({
 export const removeInstallment = data => ({
     type: types.removeInstallment,
     data
+})
+
+export const removeInstallmentsById = data => ({
+    type: types.removeInstallmentsById,
+    data: Array.isArray(data) ? data : [data]
 })

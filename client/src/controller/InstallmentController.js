@@ -1,6 +1,6 @@
 import { retrieveInstallmentsByMonth } from "../api/installmentAPI"
 import { getReferenceDateByMonthYear } from "../common"
-import { addInstallments, setInstallmentsByMonth } from "../redux/actions/installmentsAction"
+import { setInstallmentsByMonth } from "../redux/actions/installmentsAction"
 import store from "../redux/store"
 
 export const reloadInstallments = async (idAccount, month, year) => {

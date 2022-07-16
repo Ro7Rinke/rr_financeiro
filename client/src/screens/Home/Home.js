@@ -22,6 +22,7 @@ import { setMonthList } from '../../redux/actions/monthListAction'
 import { reloadMonthList } from '../../controller/HomeController'
 import { reloadInstallments } from '../../controller/InstallmentController.js'
 import { reloadCategories } from '../../controller/CategoryController'
+import { removeInstallmentsById } from '../../redux/actions/installmentsAction'
 
 const windowWidth = Dimensions.get('window').width
 const windowHeight = Dimensions.get('window').height
@@ -29,7 +30,7 @@ const windowHeight = Dimensions.get('window').height
 const Home = (props) => {
     const navigation = useNavigation()
 
-    const [referenceDate, setReferenceDate] = useState(new Date())
+    const [refreshing, setRefreshing] = useState(false)
 
     const [totalCategories, setTotalCategories] = useState([
         // {id:1, categoryName: 'Mercado', value: 1327.12},
@@ -72,7 +73,7 @@ const Home = (props) => {
 
     useEffect(() => {
         calculateTotal()
-    }, [props.installments])
+    }, [props.categories, props.installments, props.monthList])
 
     const selectMonth = (id) => {
         let newMonthList = []
@@ -88,13 +89,25 @@ const Home = (props) => {
         reloadCategories()
     }, [])
 
+    const refreshInstallmentsByMonth = async () => {
+        setRefreshing(true)
+        const index = props.monthList.findIndex(element => element.selected)
+
+        let date = moment(props.monthList[index].date)
+
+        await reloadInstallments(props.idAccount, date.month()+1, date.year())
+
+        setRefreshing(false)
+    }
+
     useEffect(() => {
         const index = props.monthList.findIndex(element => element.selected)
 
         if(index >= 0){
             let date = moment(props.monthList[index].date)
-
-            reloadInstallments(props.idAccount, date.month()+1, date.year())
+            const referenceDate = getReferenceDate(date)
+            if(!Array.isArray(props.installments[referenceDate]) || props.installments[referenceDate].length == 0)
+                refreshInstallmentsByMonth()
 
             ref.current?.scrollToIndex({
                 index,
@@ -109,6 +122,8 @@ const Home = (props) => {
         <View  style={styles.container}>
             
             <FlatList keyExtractor={item => item.id}
+                    onRefresh={refreshInstallmentsByMonth}
+                    refreshing={refreshing}
                     ListHeaderComponent={(
                         <View >
                             <FlatList style={{paddingTop: 5}}

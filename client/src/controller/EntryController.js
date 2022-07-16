@@ -2,6 +2,7 @@ import moment, { isMoment } from "moment"
 import 'moment/locale/pt'
 
 import { deleteEntries, sendNewEntry } from "../api/entryAPI"
+import { removeInstallmentsById } from "../redux/actions/installmentsAction"
 import store from "../redux/store"
 import { reloadMonthList } from "./HomeController"
 import { reloadInstallments } from "./InstallmentController"
@@ -32,8 +33,8 @@ export const addEntry = async (
 
         if(await sendNewEntry(entry)){
             let date = moment(entry.entryDate)
-            date.add(1, 'month')
-            for(let i = 1; i < entry.totalInstallment; i++){
+            // date.add(1, 'month')
+            for(let i = 0; i < entry.totalInstallment; i++){
                 reloadInstallments(idAccount, date.month()+1, date.year())
                 date.add(1, 'month')
             }
@@ -59,10 +60,10 @@ export const removeEntries = async (idsEntry) => {
             let date = monthList[monthList.findIndex(element => element.selected)].date
             if(!isMoment(date))
                 date = moment(date)
-
-            reloadInstallments(idAccount, date.month()+1, date.year())
-
+                
             reloadMonthList()
+
+            store.dispatch(removeInstallmentsById(idsEntry))
             return true
         }else{
             return false

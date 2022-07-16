@@ -33,7 +33,10 @@ const installments = (state = initialState, action) => {
             return addInstallment(state, action)
 
         case types.removeInstallment:
-            return removeInstallment({...state}, action)
+            return removeInstallment(state, action)
+
+        case types.removeInstallmentsById:
+            return removeInstallmentsById(state, action)
 
         default:
             return state
@@ -82,6 +85,16 @@ const removeInstallment = (state, action) => {
         return newState
 
     newState[referenceDate] = newState[referenceDate].filter(element => element.id != action.data.id)
+
+    return newState
+}
+
+const removeInstallmentsById = (state, action) => {
+    let newState = {...state}
+    
+    for(const referenceDate in newState){
+        newState[referenceDate] = newState[referenceDate].filter(installment => !action.data.includes(installment.idEntry))
+    }
 
     return newState
 }
