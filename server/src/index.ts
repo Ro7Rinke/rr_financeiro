@@ -22,6 +22,8 @@ app.use("/", router)
 
 app.use((req:Request, res:Response, next:NextFunction) => {
 
+    console.log(req.originalUrl)
+
     if(req.method != 'POST' 
         || req.originalUrl.includes('/conta/login') 
         || req.originalUrl.includes('/conta/signup')){

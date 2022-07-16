@@ -32,8 +32,8 @@ export const addEntry = async (
 
         if(await sendNewEntry(entry)){
             let date = moment(entry.entryDate)
-            
-            for(let i = 0; i < entry.totalInstallment; i++){
+            date.add(1, 'month')
+            for(let i = 1; i < entry.totalInstallment; i++){
                 reloadInstallments(idAccount, date.month()+1, date.year())
                 date.add(1, 'month')
             }
