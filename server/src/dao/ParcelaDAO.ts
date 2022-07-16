@@ -210,8 +210,8 @@ const deleteParcelas = async (idsParcela:number[]) => {
 
 const deleteParcelasByLancamento = async (idslancamento:number[], idConta:number) => {
     let template = ''
-    for(let index = 2; index <= idslancamento.length; index++){
-        template += `$${index}`
+    for(let index = 1; index <= idslancamento.length; index++){
+        template += `$${index+1}`
         if(index < idslancamento.length){
             template += ', '
         }

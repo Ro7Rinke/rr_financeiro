@@ -141,7 +141,7 @@ app.post('/lancamento/add', async (req:Request, res:Response) => {
 })
 
 app.post('/lancamento/remove', async (req:Request, res:Response) => {
-    try { //Adicionar idConta
+    try {
         const {idConta} = verifyJwt(getTokenFromAuthorization(req.headers.authorization))
         if(req.body){
             await removeLancamentos(req.body.idsLancamento, idConta)
@@ -150,6 +150,7 @@ app.post('/lancamento/remove', async (req:Request, res:Response) => {
             res.status(500).send('error')
         }
     } catch (error) {
+        console.log(error)
         res.status(500).send(error)
     }
 })

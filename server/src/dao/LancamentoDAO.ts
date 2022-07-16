@@ -114,8 +114,8 @@ const readLancamentosByConta = async (idConta:number):Promise<Lancamento[]> => {
 
 const deleteLancamentos = async (idsLancamento:number[], idConta:number) => {
     let template = ''
-    for(let index = 2; index <= idsLancamento.length; index++){
-        template += `$${index}`
+    for(let index = 1; index <= idsLancamento.length; index++){
+        template += `$${index+1}`
         if(index < idsLancamento.length){
             template += ', '
         }
