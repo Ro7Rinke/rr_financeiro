@@ -36,8 +36,8 @@ export const colors = {
     linkText: '#0645AD',
 }
 
-export const baseURLDev = 'https://ro7rinke2.loca.lt'//'http://192.168.200.107:8001'
-export const baseURLRelease = 'https://ro7rinke.loca.lt'
+export const baseURLDev = 'https://localhost.eu-1.sharedwithexpose.com'//'http://192.168.200.107:8001'//'https://ro7rinke2.loca.lt'
+export const baseURLRelease = 'https://ro7rinke.sa-1.sharedwithexpose.com'//'https://ro7rinke.loca.lt'
 
 export const baseURL = __DEV__ ? baseURLDev : baseURLRelease
 

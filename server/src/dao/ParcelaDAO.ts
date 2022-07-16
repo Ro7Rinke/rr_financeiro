@@ -208,17 +208,20 @@ const deleteParcelas = async (idsParcela:number[]) => {
     return result
 }
 
-const deleteParcelasByLancamento = async (idslancamento:number[]) => {
+const deleteParcelasByLancamento = async (idslancamento:number[], idConta:number) => {
     let template = ''
-    for(let index = 1; index <= idslancamento.length; index++){
+    for(let index = 2; index <= idslancamento.length; index++){
         template += `$${index}`
         if(index < idslancamento.length){
             template += ', '
         }
     }
 
-    let sql = `delete from Parcela where idLancamento in (${template})`
-    let params = idslancamento
+    let sql = `delete from Parcela where idConta = $1 and idLancamento in (${template})`
+    let params = [
+        idConta,
+        ...idslancamento
+    ]
 
     const result = await pool.query(sql, params)
 

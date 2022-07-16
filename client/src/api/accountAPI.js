@@ -29,7 +29,9 @@ export const retrieveAccountByEmail = async (email, password) => {
 
 export const retrieveAccountByJwt = async (jwt) => {
     try {
-        const response = await axios.post('/conta/login-jwt', { jwt })               
+        const response = await axios.post('/conta/login-jwt', {}, {
+            headers: {'Authorization': `bearer ${jwt}`}
+        })               
 
         if(response.status = 200 && response.data){
             return retrieveAccount(response.data)

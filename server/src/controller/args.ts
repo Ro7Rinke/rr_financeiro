@@ -1,6 +1,6 @@
 const args = process.argv.slice(2);
 
-const isDebug = ():boolean => {
+export const isDebug = ():boolean => {
 
     if(args.indexOf('--debug') >= 0)
         return true
@@ -8,6 +8,10 @@ const isDebug = ():boolean => {
     return false
 }
 
-export {
-    isDebug
+export const getTokenFromAuthorization = (authorization:string = '') => {
+    const array = authorization.split(' ')
+    if(array.length == 2)
+        return array[1]
+
+    return ''
 }

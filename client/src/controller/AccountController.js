@@ -3,10 +3,13 @@ import { setAccount } from "../redux/actions/accountAction"
 import { setIdAccount } from "../redux/actions/idAccountAction"
 import store from "../redux/store"
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import axios from 'axios'
 
 const login = (account) => {
     store.dispatch(setIdAccount(account.id))
     store.dispatch(setAccount(account))
+
+    axios.defaults.headers.common = {'Authorization': `bearer ${account.jwt}`}
 
     AsyncStorage.setItem('jwt', account.jwt)
 }

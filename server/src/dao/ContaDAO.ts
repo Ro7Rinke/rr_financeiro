@@ -2,7 +2,7 @@ import Conta from "../model/Conta"
 import { pool } from "./Database"
 
 const createConta = async (conta:Conta) => {
-    let sql = `insert into Conta(senha, email, nome) values($1, $2, $3)`
+    let sql = `insert into Conta(senha, email, nome) values($1, $2, $3) RETURNING id`
     let params = [
         conta.senha,
         conta.email,
@@ -11,7 +11,7 @@ const createConta = async (conta:Conta) => {
 
     const result = await pool.query(sql, params)
 
-    return result
+    return result.rows[0].id
 }
 
 const updateConta = async (conta:Conta) => {

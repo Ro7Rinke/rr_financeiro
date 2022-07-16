@@ -10,11 +10,11 @@ export const addLancamento = async (lancamento:Lancamento) => {
     generateParcelaByLancamento(lancamento)
 }
 
-export const removeLancamentos = async (idsLancamento:Array<number>) => {
+export const removeLancamentos = async (idsLancamento:Array<number>, idConta:number) => {
     try {
-        await deleteParcelasByLancamento(idsLancamento)        
+        await deleteParcelasByLancamento(idsLancamento, idConta)        
 
-        await deleteLancamentos(idsLancamento)
+        await deleteLancamentos(idsLancamento, idConta)
     } catch (error) {
         throw error
     }

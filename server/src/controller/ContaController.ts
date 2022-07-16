@@ -3,6 +3,8 @@ import Conta from "../model/Conta";
 import bcrypt from 'bcrypt'
 import jsonwebtoken from 'jsonwebtoken'
 import { jwtExpiration } from "../config/config";
+import { createUsuario } from "../dao/UsuarioDAO";
+import Usuario from "../model/Usuario";
 
 export const signup = async (conta:Conta) => {
     try {
@@ -10,7 +12,12 @@ export const signup = async (conta:Conta) => {
             return false
         }
         
-        await createConta(conta)
+        conta.id = await createConta(conta)
+
+        const usuario:Usuario = new Usuario()
+        usuario.idConta = conta.id
+        usuario.nome = conta.nome
+        await createUsuario(usuario)
 
         return true
     } catch (error) {
@@ -56,7 +63,7 @@ export const generateJwt = (idConta:number) => {
 
 export const verifyJwt = (jwt:string) => {
     try {
-        return jsonwebtoken.verify(jwt, <string>process.env.JWT_SECRET)
+        return <any> jsonwebtoken.verify(jwt, <string>process.env.JWT_SECRET)
     } catch (error) {
         throw error
     }

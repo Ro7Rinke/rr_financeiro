@@ -112,17 +112,20 @@ const readLancamentosByConta = async (idConta:number):Promise<Lancamento[]> => {
     return lancamentos
 }
 
-const deleteLancamentos = async (idsLancamento:number[]) => {
+const deleteLancamentos = async (idsLancamento:number[], idConta:number) => {
     let template = ''
-    for(let index = 1; index <= idsLancamento.length; index++){
+    for(let index = 2; index <= idsLancamento.length; index++){
         template += `$${index}`
         if(index < idsLancamento.length){
             template += ', '
         }
     }
 
-    let sql = `delete from Lancamento where id in (${template})`
-    let params = idsLancamento
+    let sql = `delete from Lancamento where idConta = $1 and id in (${template})`
+    let params = [
+        idConta,
+        ...idsLancamento
+    ]
 
     const result = await pool.query(sql, params)
 
