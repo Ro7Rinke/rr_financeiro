@@ -21,6 +21,12 @@ create table if not exists Categoria (
 	ativo boolean not null
 );
 
+insert into categoria (nome, descricao, ativo) values ('Mercado', null, true);
+insert into categoria (nome, descricao, ativo) values ('Alimentação', null, true);
+insert into categoria (nome, descricao, ativo) values ('Farmácia', null, true);
+insert into categoria (nome, descricao, ativo) values ('Combustível', null, true);
+insert into categoria (nome, descricao, ativo) values ('Outros', null, true);
+
 create table if not exists Tag (
 	id serial primary key not null,
 	idConta integer not null,

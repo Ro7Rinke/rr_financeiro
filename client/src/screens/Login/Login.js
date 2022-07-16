@@ -79,7 +79,7 @@ const Login = (props) => {
                 <Text style={styles.button}>{isLogin ? 'Login' : 'Cadastrar'}</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.linkContainer} onPress={() => setIsLogin(!isLogin)}>
-                <Text >{isLogin ? 'Não possui uma conta? ' : 'Já é cadastrado? '}</Text>
+                <Text style={styles.smallText}>{isLogin ? 'Não possui uma conta? ' : 'Já é cadastrado? '}</Text>
                 <Text style={styles.linkText}>{isLogin ? 'Cadastrar-se.' : 'Fazer Login.'}</Text>
             </TouchableOpacity>
         </View>
@@ -102,6 +102,7 @@ const styles = StyleSheet.create({
         marginLeft: 2,
         marginRight: 5,
         width: 115,
+        color: colors.label
     },
     input: {
         borderRadius: 5,
@@ -115,6 +116,7 @@ const styles = StyleSheet.create({
         paddingRight: 10, 
         backgroundColor: '#fff',
         fontSize: 22,
+        color: '#000'
     },
     button: {
         margin: 25,
@@ -133,7 +135,11 @@ const styles = StyleSheet.create({
     },  
     linkText: {
         color: colors.linkText, 
-    }
+    },
+    smallText: {
+        color: colors.label,
+        fontWeight: '400',
+    },  
 })
 
 const mapStateToProps = (state) => {

@@ -9,6 +9,7 @@ import DateTimePicker from '@react-native-community/datetimepicker'
 import {Picker} from '@react-native-picker/picker'
 import { useNavigation, StackActions } from '@react-navigation/native'
 import { addEntry } from '../../controller/EntryController'
+import moment from 'moment'
 
 const AddInstallment = (props) => {
     const navigation = useNavigation()
@@ -27,6 +28,10 @@ const AddInstallment = (props) => {
     const onDateChange = (event, newDate) => {
         setDate(newDate)
         setDatePickerOpen(false)
+    }
+
+    const getDateText = () => {
+        return moment(date).format('DD/MM/YYYY')
     }
 
     const onAddInstallment = async () => {
@@ -93,7 +98,7 @@ const AddInstallment = (props) => {
                     if(!datePickerOpen)
                         setDatePickerOpen(true)
                 }}>
-                    <Text style={[styles.textInput, styles.textDate]}>{date.toLocaleDateString()}</Text>
+                    <Text style={[styles.textInput, styles.textDate]}>{getDateText()}</Text>
                 </TouchableOpacity>
             </View>
             {datePickerOpen && (<DateTimePicker
@@ -140,6 +145,7 @@ const styles = StyleSheet.create({
         marginRight: 5,
         width: 115,
         textAlign: 'right',
+        color: colors.label,
     },
     textInput: {
         borderRadius: 5,
@@ -153,6 +159,7 @@ const styles = StyleSheet.create({
         paddingLeft: 10,
         paddingRight: 10, 
         backgroundColor: '#fff',
+        color: '#000',
         fontSize: 22,
     },
     textInputInstallment: {
@@ -163,7 +170,6 @@ const styles = StyleSheet.create({
     },
     textDate: {
         width: '100%',
-        color: '#000',
         paddingTop: 5,
         borderWidth: 2,
     },

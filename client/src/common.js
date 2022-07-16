@@ -34,6 +34,7 @@ export const colors = {
         '5': '#0000ff',
     },
     linkText: '#0645AD',
+    label: '#6c6c6c',
 }
 
 export const baseURLDev = 'https://localhost.eu-1.sharedwithexpose.com'//'http://192.168.200.107:8001'//'https://ro7rinke2.loca.lt'
