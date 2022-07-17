@@ -1,9 +1,10 @@
 import { useNavigation, StackActions } from '@react-navigation/native'
 import React, {useEffect, useState} from 'react'
-import { Dimensions, View, StyleSheet, Text, TouchableOpacity, TextInput } from 'react-native'
+import { Dimensions, View, StyleSheet, Text, TouchableOpacity, TextInput, Image } from 'react-native'
 import { connect } from 'react-redux'
 import { colors } from '../../common'
 import { loginByEmail, loginByJwt, signup } from '../../controller/AccountController'
+import ImageIcon from '../../../android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png'
 
 const windowWidth = Dimensions.get('window').width
 const windowHeight = Dimensions.get('window').height
@@ -52,6 +53,7 @@ const Login = (props) => {
 
     return isLoading ? null : (
         <View style={styles.container}>
+            <Image source={ImageIcon}/>
             {!isLogin ?
                 <View style={styles.containerInput}>
                     <Text style={styles.text}>Nome:</Text>
