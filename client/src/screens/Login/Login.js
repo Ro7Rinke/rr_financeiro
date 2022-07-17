@@ -52,7 +52,7 @@ const Login = (props) => {
     },[])
 
     return isLoading ? null : (
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
             <Image source={ImageIcon}/>
             {!isLogin ?
                 <View style={styles.containerInput}>
@@ -65,6 +65,7 @@ const Login = (props) => {
             <View style={styles.containerInput}>
                 <Text style={styles.text}>Email:</Text>
                 <TextInput style={styles.input} 
+                    autoCapitalize='none'
                     value={emailText}
                     onChangeText={(text) => setEmailText(text)}
                     keyboardType="email-address"/>
@@ -72,6 +73,7 @@ const Login = (props) => {
             <View style={styles.containerInput}>
                 <Text style={styles.text}>Senha:</Text>
                 <TextInput style={styles.input} 
+                    autoCapitalize='none'
                     value={passwordText}
                     onChangeText={(text) => setPasswordText(text)}
                     secureTextEntry={true}
@@ -84,7 +86,7 @@ const Login = (props) => {
                 <Text style={styles.smallText}>{isLogin ? 'Não possui uma conta? ' : 'Já é cadastrado? '}</Text>
                 <Text style={styles.linkText}>{isLogin ? 'Cadastrar-se.' : 'Fazer Login.'}</Text>
             </TouchableOpacity>
-        </View>
+        </ScrollView>
     )
 }
 
