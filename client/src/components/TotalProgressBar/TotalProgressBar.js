@@ -1,12 +1,16 @@
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import React, {useState} from 'react'
-import { View, StyleSheet, Text } from 'react-native'
-import { AnimatedCircularProgress } from 'react-native-circular-progress' //"react-native-circular-progress": "^1.3.7"
-// import {Circle} from 'react-native-progress' //"react-native-progress": "^5.0.0",
-import { formatMoney } from '../../common'
+import { View, StyleSheet, Text, TouchableOpacity, Modal, TextInput } from 'react-native'
+import { AnimatedCircularProgress } from 'react-native-circular-progress' 
+import { MaskedTextInput } from 'react-native-mask-text'
+import { colors, formatMoney } from '../../common'
+import { setTargetValue } from '../../redux/actions/targetValueAction'
+import store from '../../redux/store'
 
 const TotalProgressBar = (props) => {
-    // const [totalValue, setTotalValue] = useState(7500)
-    // const [targetValue, setTargetValue] = useState(10000)
+
+    const [showModal, setShowModal] = useState(false)
+    const [newTargetValue, setNewTargetValue] = useState(0)
 
     const calculateFillPercentage = () => {
         return (props.totalValue * 100 / (props.targetValue > 0 ? props.targetValue : 1))
@@ -14,10 +18,12 @@ const TotalProgressBar = (props) => {
 
     const fillPercentage = calculateFillPercentage()
 
-    // const [fillPercentage, setFillPercentage] = useState(calculateFillPercentage())
-
-    
-
+    const onUpdateTargetValue = () => {
+        store.dispatch(setTargetValue(newTargetValue))
+        AsyncStorage.setItem('targetValue', newTargetValue.toString())
+        setShowModal(!showModal)
+    }
+  
     return(
         <View style={styles.container}>
             <AnimatedCircularProgress
@@ -47,31 +53,60 @@ const TotalProgressBar = (props) => {
                 backgroundColor="#3d587544" >
                 {
                     (fill) => (
-                        <View style={styles.innerCircle}>
+                        <TouchableOpacity style={styles.innerCircle}
+                            onPress={() => setShowModal(!showModal)} >
                             <Text style={styles.textTotalValue}>
                                 R$ {formatMoney((fill * props.totalValue / fillPercentage), 2, ',', '.')}
                             </Text>
-                            <View style={styles.slash}/>
-                            {props.targetValue > 0 ? <Text style={styles.textTargetValue}>
-                                R$ {formatMoney(props.targetValue, 2, ',', '.')}
-                            </Text> : null}
-                        </View>
+                                <View style={styles.slash}/>
+                                {props.targetValue > 0 ? <Text style={styles.textTargetValue}>
+                                    R$ {formatMoney(props.targetValue, 2, ',', '.')}
+                                </Text> : null}
+                        </TouchableOpacity>
                     )
                 }
             </AnimatedCircularProgress>
-
-            {/* <Circle 
-                progress={0.75}
-                color='#f00'
-                animated={true}
-                strokeCap='round'
-                showsText={true}
-                formatText={(text) => `R$${text},00`}
-                unfilledColor='#ddd'
-                fill='#00e0ff'
-                direction='counter-clockwise'
-                thickness={10}
-                size={200} /> */}
+            <Modal animationType='fade'
+            transparent={true}
+            visible={showModal}
+            onRequestClose={() => {
+                setShowModal(!showModal);
+            }} >
+                <View style={styles.centeredView}>
+                    <View style={styles.modalView}>
+                        <Text style={styles.modalText}>Valor da meta.</Text>
+                        {/* <TextInput style={styles.textInput}
+                            defaultValue={formatMoney(props.targetValue, 2, ',', '.')}/> */}
+                        <MaskedTextInput
+                            defaultValue={`${props.targetValue*100}`}
+                            onSubmitEditing={onUpdateTargetValue}
+                            type="currency"
+                            options={{
+                                prefix: 'R$',
+                                decimalSeparator: ',',
+                                groupSeparator: '.',
+                                precision: 2
+                            }}
+                            onChangeText={(formatted, extracted) => setNewTargetValue(extracted/100)}
+                            style={styles.textInput}
+                            keyboardType="numeric" />
+                        <View style={styles.modalButtonsContainer}>
+                            <TouchableOpacity
+                                style={[styles.button, styles.buttonDelete]}
+                                onPress={onUpdateTargetValue}
+                            >
+                                <Text style={[styles.textStyle]}>Atualizar</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={[styles.button, styles.buttonClose]}
+                                onPress={() => setShowModal(!showModal)}
+                            >
+                                <Text style={styles.textStyle}>Cancelar</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </View>
+            </Modal>
         </View>
     ) 
 }
@@ -106,6 +141,71 @@ const styles = StyleSheet.create({
         height: 2,
         width: '75%',
         backgroundColor: '#00000074',
+    },
+    centeredView: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: 22,
+    },
+    modalView: {
+        margin: 20,
+        backgroundColor: "white",
+        borderRadius: 20,
+        padding: 35,
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+    },
+    modalButtonsContainer: {
+        flexDirection: 'row',
+    },
+    button: {
+        borderRadius: 30,
+        padding: 15,
+        elevation: 2,
+        marginTop: 10,
+        marginHorizontal: 15,
+        width: 120,
+    },
+    buttonDelete: {
+        backgroundColor: "#ff0000",
+    },
+    buttonClose: {
+        backgroundColor: "#2196F3",
+    },
+    textStyle: {
+        color: "white",
+        fontWeight: "bold",
+        textAlign: "center",
+        fontSize: 15,
+    },
+    modalText: {
+        marginBottom: 15,
+        textAlign: "center",
+        fontSize: 18,
+        color: colors.label,
+    },
+    textInput: {
+        borderRadius: 5,
+        width: 150,
+        height: 40,
+        margin: 12,
+        borderWidth: 2,
+        borderColor: colors.borderColor,
+        paddingBottom: 5,
+        paddingTop: 10,
+        paddingLeft: 10,
+        paddingRight: 10, 
+        backgroundColor: colors.appBackground,
+        color: '#000',
+        fontSize: 22,
     },
 })
 

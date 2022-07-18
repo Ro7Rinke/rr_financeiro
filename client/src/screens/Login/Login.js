@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { colors } from '../../common'
 import { loginByEmail, loginByJwt, signup } from '../../controller/AccountController'
 import ImageIcon from '../../../android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png'
+import { reloadTargetValue } from '../../controller/HomeController'
 
 const windowWidth = Dimensions.get('window').width
 const windowHeight = Dimensions.get('window').height
@@ -48,6 +49,7 @@ const Login = (props) => {
     }
 
     useEffect(() => {
+        reloadTargetValue()
         checkLogin()
     },[])
 
