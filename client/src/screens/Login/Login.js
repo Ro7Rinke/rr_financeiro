@@ -1,6 +1,6 @@
 import { useNavigation, StackActions } from '@react-navigation/native'
 import React, {useEffect, useState} from 'react'
-import { Dimensions, View, StyleSheet, Text, TouchableOpacity, TextInput, Image } from 'react-native'
+import { Dimensions, View, ScrollView, StyleSheet, Text, TouchableOpacity, TextInput, Image } from 'react-native'
 import { connect } from 'react-redux'
 import { colors } from '../../common'
 import { loginByEmail, loginByJwt, signup } from '../../controller/AccountController'
@@ -52,48 +52,52 @@ const Login = (props) => {
     },[])
 
     return isLoading ? null : (
-        <ScrollView style={styles.container}>
-            <Image source={ImageIcon}/>
-            {!isLogin ?
+        <ScrollView style={styles.containerScrollView}>
+            <View style={styles.container}>
+                <Image source={ImageIcon}/>
+                {!isLogin ?
+                    <View style={styles.containerInput}>
+                        <Text style={styles.text}>Nome:</Text>
+                        <TextInput style={styles.input} 
+                            value={nameText}
+                            onChangeText={(text) => setNameText(text)} />
+                    </View> 
+                : null}
                 <View style={styles.containerInput}>
-                    <Text style={styles.text}>Nome:</Text>
+                    <Text style={styles.text}>Email:</Text>
                     <TextInput style={styles.input} 
-                        value={nameText}
-                        onChangeText={(text) => setNameText(text)} />
-                </View> 
-            : null}
-            <View style={styles.containerInput}>
-                <Text style={styles.text}>Email:</Text>
-                <TextInput style={styles.input} 
-                    autoCapitalize='none'
-                    value={emailText}
-                    onChangeText={(text) => setEmailText(text)}
-                    keyboardType="email-address"/>
+                        autoCapitalize='none'
+                        value={emailText}
+                        onChangeText={(text) => setEmailText(text)}
+                        keyboardType="email-address"/>
+                </View>
+                <View style={styles.containerInput}>
+                    <Text style={styles.text}>Senha:</Text>
+                    <TextInput style={styles.input} 
+                        autoCapitalize='none'
+                        value={passwordText}
+                        onChangeText={(text) => setPasswordText(text)}
+                        secureTextEntry={true}
+                        selectTextOnFocus={true}/>
+                </View>
+                <TouchableOpacity onPress={isLogin ? onLogin : onSignup} >
+                    <Text style={styles.button}>{isLogin ? 'Login' : 'Cadastrar'}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.linkContainer} onPress={() => setIsLogin(!isLogin)}>
+                    <Text style={styles.smallText}>{isLogin ? 'Não possui uma conta? ' : 'Já é cadastrado? '}</Text>
+                    <Text style={styles.linkText}>{isLogin ? 'Cadastrar-se.' : 'Fazer Login.'}</Text>
+                </TouchableOpacity>
             </View>
-            <View style={styles.containerInput}>
-                <Text style={styles.text}>Senha:</Text>
-                <TextInput style={styles.input} 
-                    autoCapitalize='none'
-                    value={passwordText}
-                    onChangeText={(text) => setPasswordText(text)}
-                    secureTextEntry={true}
-                    selectTextOnFocus={true}/>
-            </View>
-            <TouchableOpacity onPress={isLogin ? onLogin : onSignup} >
-                <Text style={styles.button}>{isLogin ? 'Login' : 'Cadastrar'}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.linkContainer} onPress={() => setIsLogin(!isLogin)}>
-                <Text style={styles.smallText}>{isLogin ? 'Não possui uma conta? ' : 'Já é cadastrado? '}</Text>
-                <Text style={styles.linkText}>{isLogin ? 'Cadastrar-se.' : 'Fazer Login.'}</Text>
-            </TouchableOpacity>
         </ScrollView>
     )
 }
 
 const styles = StyleSheet.create({
-    container: {
+    containerScrollView: {
         flex: 1,
         backgroundColor: colors.appBackground,
+    },
+    container: {
         justifyContent: 'center',
         alignItems: 'center',
     },
