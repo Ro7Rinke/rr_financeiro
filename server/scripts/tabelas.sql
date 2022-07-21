@@ -22,9 +22,9 @@ create table if not exists Categoria (
 );
 
 insert into categoria (nome, descricao, ativo) values ('Mercado', null, true);
-insert into categoria (nome, descricao, ativo) values ('Alimentação', null, true);
-insert into categoria (nome, descricao, ativo) values ('Farmácia', null, true);
-insert into categoria (nome, descricao, ativo) values ('Combustível', null, true);
+insert into categoria (nome, descricao, ativo) values ('Alimentaï¿½ï¿½o', null, true);
+insert into categoria (nome, descricao, ativo) values ('Farmï¿½cia', null, true);
+insert into categoria (nome, descricao, ativo) values ('Combustï¿½vel', null, true);
 insert into categoria (nome, descricao, ativo) values ('Outros', null, true);
 
 create table if not exists Tag (
@@ -93,7 +93,7 @@ create table if not exists Parcela (
 create table if not exists Recebimento (
 	id serial primary key not null,
 	idConta integer not null,
-	idUsuario integer not null,
+	-- idUsuario integer not null,
 	nome varchar(40) not null,
 	descricao varchar(200) null,
 	ativo boolean not null,
@@ -101,7 +101,7 @@ create table if not exists Recebimento (
 	valor numeric(10,2) not null,
 	dataRecebimento date not null,
 	constraint fk_idConta foreign key(idConta) references Conta(id),
-	constraint fk_idUsuario foreign key(idUsuario) references Usuario(id)
+	-- constraint fk_idUsuario foreign key(idUsuario) references Usuario(id)
 );
 
 create table if not exists Meta (
@@ -128,9 +128,9 @@ create table if not exists LancamentoTag (
 );
 
 insert into categoria (nome, descricao, ativo) values ('Mercado', null, true);
-insert into categoria (nome, descricao, ativo) values ('Alimentação', null, true);
-insert into categoria (nome, descricao, ativo) values ('Farmácia', null, true);
-insert into categoria (nome, descricao, ativo) values ('Combustível', null, true);
+insert into categoria (nome, descricao, ativo) values ('Alimentaï¿½ï¿½o', null, true);
+insert into categoria (nome, descricao, ativo) values ('Farmï¿½cia', null, true);
+insert into categoria (nome, descricao, ativo) values ('Combustï¿½vel', null, true);
 insert into categoria (nome, descricao, ativo) values ('Outros', null, true);
 
 

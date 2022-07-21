@@ -2,7 +2,7 @@
 class Recebimento{
     id:number
     idConta:number
-    idUsuario:number
+    // idUsuario:number
     nome:string
     descricao:string
     ativo:boolean
@@ -13,7 +13,7 @@ class Recebimento{
     constructor(){
         this.id = 0
         this.idConta = 0
-        this.idUsuario = 0
+        // this.idUsuario = 0
         this.nome = ''
         this.descricao = ''
         this.ativo = true
