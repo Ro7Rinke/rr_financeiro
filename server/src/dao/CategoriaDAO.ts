@@ -15,7 +15,7 @@ const createCategoria = async (categoria:Categoria) => {
 }
 
 const updateCategoria = async (categoria:Categoria) => {
-    let sql = `update Categoria nome = $1, descricao = $2, ativo = $3 where id = $4`
+    let sql = `update Categoria set nome = $1, descricao = $2, ativo = $3 where id = $4`
     let params = [
         categoria.nome,
         categoria.descricao,

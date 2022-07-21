@@ -14,7 +14,7 @@ const createTag = async (tag:Tag) => {
 }
 
 const updateTag = async (tag:Tag, idConta:number) => {
-    let sql = `update Tag nome = $1 where id = $2 and idConta = $3`
+    let sql = `update Tag set nome = $1 where id = $2 and idConta = $3`
     let params = [
         tag.nome,
         tag.id,

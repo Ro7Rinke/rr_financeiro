@@ -15,7 +15,7 @@ const createConta = async (conta:Conta) => {
 }
 
 const updateConta = async (conta:Conta) => {
-    let sql = `update Conta senha = $1, email = $2, nome = $3 where id = $4`
+    let sql = `update Conta set senha = $1, email = $2, nome = $3 where id = $4`
     let params = [
         conta.senha,
         conta.email,

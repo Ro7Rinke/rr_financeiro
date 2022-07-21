@@ -14,7 +14,7 @@ const createUsuario = async (usuario:Usuario) => {
 }
 
 const updateUsuario = async (usuario:Usuario, idConta:number) => {
-    let sql = `update Usuario nome = $1 where id = $2 and idConta = $3`
+    let sql = `update Usuario set nome = $1 where id = $2 and idConta = $3`
     let params = [
         usuario.nome,
         usuario.id,

@@ -20,7 +20,7 @@ const createParcela = async (parcela:Parcela) => {
 }
 
 const updateParcela = async (parcela:Parcela) => {
-    let sql = `update Parcela idConta = $1, idUsuario = $2, idLancamento = $3, dataParcela = $4, parcelaAtual = $5, valorParcela = $6, dataInclusao = $7, ativo = $8 where id = $9`
+    let sql = `update Parcela set idConta = $1, idUsuario = $2, idLancamento = $3, dataParcela = $4, parcelaAtual = $5, valorParcela = $6, dataInclusao = $7, ativo = $8 where id = $9`
     let params = [
         parcela.idConta,
         parcela.idUsuario,

@@ -22,7 +22,7 @@ const createLancamento = async (lancamento:Lancamento) => {
 }
 
 const updateLancamento = async (lancamento:Lancamento) => {
-    let sql = `update Lancamento idConta = $1, idUsuario = $2, nome = $3, descricao = $4, ativo = $5, dataInclusao = $6, valorTotal = $7, parcelaTotal = $8, idCategoria = $9, dataLancamento = $10 where id = $11`
+    let sql = `update Lancamento set idConta = $1, idUsuario = $2, nome = $3, descricao = $4, ativo = $5, dataInclusao = $6, valorTotal = $7, parcelaTotal = $8, idCategoria = $9, dataLancamento = $10 where id = $11`
     let params = [
         lancamento.idConta,
         lancamento.idUsuario,
