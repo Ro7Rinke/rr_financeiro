@@ -10,6 +10,8 @@ import { readParcelasByMonth } from './dao/ParcelaDAO'
 import MonthType from './type/MonthType'
 import bcrypt from 'bcrypt'
 import { readUsuariosByConta } from './dao/UsuarioDAO'
+import { addRecebimento } from './controller/RecebimentoController'
+import { readRecebimentosByMonth } from './dao/RecebimentoDAO'
 
 const app:Application = express()
 const router:Router = express.Router()
@@ -151,6 +153,35 @@ app.post('/lancamento/remove', async (req:Request, res:Response) => {
         }
     } catch (error) {
         console.log(error)
+        res.status(500).send(error)
+    }
+})
+
+app.post('/recebimento/add', async (req:Request, res:Response) => {
+    try {
+        const {idConta} = verifyJwt(getTokenFromAuthorization(req.headers.authorization))
+        if(req.body){
+            await addRecebimento({...req.body, idConta})
+            res.send('ok')
+        }else{
+            res.status(500).send('error')
+        }
+    } catch (error) {
+        console.log(error)
+        res.status(500).send(error)
+    }
+})
+
+app.post('/recebimento/by-month', async (req:Request, res:Response):Promise<void> => {
+    try {
+        const {idConta} = verifyJwt(getTokenFromAuthorization(req.headers.authorization))
+        if(req.body && req.body.month && req.body.year){
+            const data = await readRecebimentosByMonth(idConta, req.body.month, req.body.year)
+            res.send(data)
+        }else{
+            res.status(500).send('error')
+        }
+    } catch (error) {
         res.status(500).send(error)
     }
 })
