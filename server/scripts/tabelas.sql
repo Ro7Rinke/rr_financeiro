@@ -100,8 +100,8 @@ create table if not exists Recebimento (
 	dataInclusao date not null,
 	valor numeric(10,2) not null,
 	dataRecebimento date not null,
-	constraint fk_idConta foreign key(idConta) references Conta(id),
-	-- constraint fk_idUsuario foreign key(idUsuario) references Usuario(id)
+	constraint fk_idConta foreign key(idConta) references Conta(id)
+	-- ,constraint fk_idUsuario foreign key(idUsuario) references Usuario(id)
 );
 
 create table if not exists Meta (
