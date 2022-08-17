@@ -12,11 +12,16 @@ import bcrypt from 'bcrypt'
 import { readUsuariosByConta } from './dao/UsuarioDAO'
 import { addRecebimento } from './controller/RecebimentoController'
 import { readRecebimentosByMonth } from './dao/RecebimentoDAO'
+import { startTunnel } from './controller/TunnelController'
 
 const app:Application = express()
 const router:Router = express.Router()
 
 const PORT = isDebug() ? 8001 : 8002 //process.env.PORT || 8001
+
+const subdomain = isDebug() ? 'ro7rinke2' : 'ro7rinke'
+
+startTunnel(PORT.toString(), subdomain)
 
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
