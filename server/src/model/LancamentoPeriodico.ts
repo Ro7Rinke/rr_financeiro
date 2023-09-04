@@ -1,13 +1,18 @@
 import Lancamento from "./Lancamento"
+import Periodo from "./Periodo"
 
 class LancamentoPeriodico extends Lancamento{
-    periodo:string
+    idPeriodo:number
     dataInicio:Date
+    dataFim:Date
+    periodo:Periodo
 
     constructor(){
         super()
-        this.periodo = ''
+        this.idPeriodo = 0
         this.dataInicio = new Date()
+        this.dataFim = new Date()
+        this.periodo = new Periodo()
     }
 }
 
